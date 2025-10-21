@@ -1,4 +1,10 @@
 <?php
+
+
+// TEMPORARY: These lines force the server to show PHP errors for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // --- 1. Define Pricing Schemes ---
 // This matrix holds the different prices and currency symbols for each region/country.
 
