@@ -79,3 +79,66 @@
         font-size: 24px !important;
     }
 }
+
+/* =======================================
+   COUNTRY SWITCHER STYLES
+   ======================================= */
+.country-switcher {
+    text-align: center;
+    padding: 30px 0;
+    background: var(--surface); /* Use a light background color */
+    border-bottom: 1px solid var(--border);
+}
+
+.country-switcher p {
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.country-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn-country {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+    padding: 8px 15px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.btn-country:hover {
+    background: var(--border);
+    transform: translateY(-1px);
+}
+
+.btn-country.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary-600);
+    box-shadow: var(--shadow-sm);
+    transform: none;
+}
+
+/* === New Currency Class (CAD) === */
+.currency-cad {
+    /* Set specific styling for Canadian Dollar if needed */
+}
+
+/* Ensure the button text is visible on small screens */
+@media (max-width: 600px) {
+    .country-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .btn-country {
+        width: 100%;
+        max-width: 250px;
+    }
+}

@@ -1,58 +1,57 @@
 document.addEventListener('DOMContentLoaded', function() {
     
     // --- 1. Pricing Data Structure ---
+    // Added CA (Canada) pricing as requested.
     const pricing_data = {
-        'DEFAULT': { symbol: '$', basic: 500, pro: 1200, class: 'currency-usd' },
         'US':      { symbol: '$', basic: 500, pro: 1200, class: 'currency-usd' },
         'PK':      { symbol: 'Rs', basic: 145000, pro: 265000, class: 'currency-pkr' },
+        'CA':      { symbol: 'C$', basic: 650, pro: 1600, class: 'currency-cad' }, // Canada Pricing
         'EU':      { symbol: '€', basic: 450, pro: 1100, class: 'currency-eur' }
     };
-
-    // EU Country Codes (for regional grouping)
-    const eu_codes = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
     
-    // CORS Workaround: Using a public proxy to fetch geolocation data
-    // NOTE: This service is for testing and may be unstable.
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; 
-    const targetUrl = 'https://ipapi.co/json/';
+    // --- 2. Initial Price Setup (Set to US by default) ---
+    // If we can't detect location, we start with the US price.
+    updatePrices('US'); 
 
-    // --- 2. Fetch Location via Proxy ---
-    fetch(proxyUrl + targetUrl)
-        .then(response => {
-            if (!response.ok) {
-                // If the proxy or API fails, log the error and use the default
-                console.error('Fetch failed via proxy with status:', response.status);
-                throw new Error('Proxy or API request failed.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            let countryCode = data.country_code ? data.country_code.toUpperCase() : 'DEFAULT';
-            let priceKey = 'DEFAULT';
+    // --- 3. Button Click Handler (New Logic) ---
+    const countryButtons = document.querySelectorAll('.btn-country');
 
-            // Determine the correct pricing key
-            if (pricing_data[countryCode]) {
-                priceKey = countryCode;
-            } else if (eu_codes.includes(countryCode)) {
-                priceKey = 'EU';
-            }
-
-            updatePrices(priceKey); 
-        })
-        .catch(error => {
-            console.error('FINAL ERROR: Geolocation failed. Applying USD default.', error);
-            updatePrices('DEFAULT');
+    countryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const countryKey = this.getAttribute('data-country');
+            
+            // 3a. Update Prices
+            updatePrices(countryKey);
+            
+            // 3b. Update Button Appearance (Active State)
+            countryButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // 3c. Optional: Save selection to local storage for persistence
+            localStorage.setItem('user_pricing_key', countryKey);
         });
+    });
 
-
-    // --- 3. Update Prices and Apply CSS Class ---
+    // 4. Check for previous selection on load
+    const savedKey = localStorage.getItem('user_pricing_key');
+    if (savedKey && pricing_data[savedKey]) {
+        updatePrices(savedKey);
+        // Set the saved button to active
+        const activeBtn = document.querySelector(`.btn-country[data-country="${savedKey}"]`);
+        if (activeBtn) {
+            countryButtons.forEach(btn => btn.classList.remove('active'));
+            activeBtn.classList.add('active');
+        }
+    }
+    
+    // --- 5. Price Update Function ---
     function updatePrices(key) {
         const prices = pricing_data[key];
         
         const priceBasicEl = document.getElementById('basic-price-value');
         const priceProEl = document.getElementById('pro-price-value');
         
-        // Helper function to format large numbers with commas (e.g., 145,000)
+        // Helper function to format large numbers with commas
         const formatNumber = (num) => num.toLocaleString('en-US');
 
         // Update Starter Package
@@ -60,10 +59,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const formattedBasic = formatNumber(prices.basic);
             priceBasicEl.textContent = prices.symbol + formattedBasic;
             
-            // Add currency class to the parent .price-tag
+            // Add currency class (for CSS styling)
             const basicPriceTag = priceBasicEl.closest('.price-tag');
             if (basicPriceTag) {
-                // IMPORTANT: Ensure the class list is correctly updated
+                // Reset and add new class
                 basicPriceTag.className = 'price-tag ' + prices.class; 
             }
         }
@@ -73,10 +72,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const formattedPro = formatNumber(prices.pro);
             priceProEl.textContent = prices.symbol + formattedPro;
             
-            // Add currency class to the parent .price-tag
+            // Add currency class (for CSS styling)
             const proPriceTag = priceProEl.closest('.price-tag');
             if (proPriceTag) {
-                // IMPORTANT: Ensure the class list is correctly updated
+                // Reset and add new class
                 proPriceTag.className = 'price-tag ' + prices.class;
             }
         }
