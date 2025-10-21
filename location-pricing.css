@@ -1,53 +1,81 @@
 /* =======================================
-   LOCATION-SPECIFIC PRICING STYLES (v2)
-   Styles based on class added by JavaScript.
+   LOCATION-SPECIFIC PRICING STYLES
+   (Updated for PKR sizing and specificity)
    ======================================= */
 
 /* General Price Tag Styling */
 .price-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+    margin-bottom: 8px;
     display: flex;
-    align-items: baseline; /* Align symbol and number baseline */
-    justify-content: center;
-    font-size: 2.5em; 
-    font-weight: 700;
+    align-items: baseline;
+    justify-content: flex-start; 
+    transition: all 0.3s ease;
 }
 
 /* Style for the dynamic price value span */
 #basic-price-value,
 #pro-price-value {
-    white-space: nowrap; 
-    transition: font-size 0.3s; /* Smooth visual transition */
+    white-space: nowrap;
+    display: inline-block;
+    /* Ensure no visual gaps between symbol and number */
+    letter-spacing: -1px; 
 }
 
 /* === Currency-Specific Adjustments === */
 
-/* Pakistani Rupee (PKR) Adjustment */
+/* Pakistani Rupee (PKR) - Reduce font size ONLY on the price value element */
 .currency-pkr #basic-price-value,
 .currency-pkr #pro-price-value {
-    /* Since the PKR price is very long (e.g., 145000), we reduce the size 
-       to ensure it doesn't break the layout on smaller screens. */
-    font-size: 0.8em; /* 20% smaller than the container font-size */
+    /* Temporarily using !important to debug and ensure this style is applied */
+    font-size: 32px !important; 
+    
+    /* Ensure the currency symbol and number are close */
+    letter-spacing: 0 !important;
 }
 
-/* Euro (EUR) Adjustment (If needed) */
-.currency-eur #basic-price-value,
-.currency-eur #pro-price-value {
-    /* You can apply specific fonts or spacing here if needed for the Euro symbol */
-    /* font-family: 'Specific-Euro-Font', sans-serif; */
+/* --- Standard Sizing (USD/EUR) --- */
+/* These inherit the .price-tag size, ensuring consistency */
+.currency-usd {
+    /* Ensures the base price tag size is used */
+    font-size: 42px !important; 
 }
-
 
 /* === Responsive Adjustments === */
 
-/* Shrink all price tags on small screens to prevent overflow */
-@media (max-width: 600px) {
+/* Tablet screens (Max 1024px) */
+@media (max-width: 1024px) {
     .price-tag {
-        font-size: 1.8em; /* Base size reduced */
+        font-size: 38px;
     }
-    
-    /* Re-apply the specific reduction for PKR on small screens */
     .currency-pkr #basic-price-value,
     .currency-pkr #pro-price-value {
-        font-size: 0.9em; /* Slightly less drastic reduction on smaller base size */
+        font-size: 28px !important;
+    }
+}
+
+/* Mobile screens (Max 768px) */
+@media (max-width: 768px) {
+    .price-tag {
+        font-size: 36px;
+    }
+    .currency-pkr #basic-price-value,
+    .currency-pkr #pro-price-value {
+        font-size: 26px !important;
+    }
+}
+
+/* Small mobile screens (Max 640px) */
+@media (max-width: 640px) {
+    .price-tag {
+        font-size: 32px;
+    }
+    .currency-pkr #basic-price-value,
+    .currency-pkr #pro-price-value {
+        font-size: 24px !important;
     }
 }
