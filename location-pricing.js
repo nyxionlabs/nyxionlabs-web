@@ -1,62 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. Fetch location data from a free, non-prompting API
-    fetch('https://ipapi.co/json/') // Using ipapi.co (HTTPS required for modern sites)
-        .then(response => {
-            if (!response.ok) {
-                // If the API call fails, log the error and use default prices
-                throw new Error('IP API network response was not ok');
-            }
-            return response.json();
-        })
+    // Pricing data structure to hold symbol and class name
+    const pricing_data = {
+        'DEFAULT': { symbol: '$', basic: 499, pro: 899, class: 'currency-usd' },
+        'US':      { symbol: '$', basic: 499, pro: 899, class: 'currency-usd' },
+        'PK':      { symbol: 'Rs', basic: 145000, pro: 265000, class: 'currency-pkr' },
+        'EU':      { symbol: '€', basic: 450, pro: 800, class: 'currency-eur' }
+    };
+
+    // EU Country Codes
+    const eu_codes = ['DE', 'FR', 'IT', 'ES', 'NL', 'BE'];
+
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
         .then(data => {
-            // The country code is usually in the 'country_code' field
-            const countryCode = data.country_code ? data.country_code.toUpperCase() : 'DEFAULT';
-            updatePrices(countryCode); 
+            let countryCode = data.country_code ? data.country_code.toUpperCase() : 'DEFAULT';
+            let priceKey = 'DEFAULT';
+
+            // Determine the correct pricing key
+            if (pricing_data[countryCode]) {
+                priceKey = countryCode;
+            } else if (eu_codes.includes(countryCode)) {
+                priceKey = 'EU';
+            }
+
+            updatePrices(priceKey); 
         })
         .catch(error => {
             console.error('Geolocation failed, using default prices:', error);
-            updatePrices('DEFAULT'); // Fallback in case of any error
+            updatePrices('DEFAULT');
         });
 
 
-    // 2. Pricing Logic Function
-    function updatePrices(code) {
-        // --- DEFAULT/FALLBACK IS NOW EXPLICITLY SET TO USD ---
-        let currencySymbol = '$';
-        let basicPrice = 499;
-        let proPrice = 899;
-
-        // --- Define your custom price rules here ---
+    function updatePrices(key) {
+        const prices = pricing_data[key];
         
-        // Rule 1: Pakistani Prices (Code 'PK')
-        if (code === 'PK') {
-            currencySymbol = 'Rs'; // Pakistani Rupee symbol
-            basicPrice = 145000; // Example PKR price for Basic
-            proPrice = 265000;  // Example PKR price for Pro
-        } 
-        // Rule 2: European Prices (Codes for common Euro-using countries)
-        else if (['DE', 'FR', 'IT', 'ES', 'NL', 'BE', 'EU_COUNTRIES'].includes(code)) { 
-            currencySymbol = '€';
-            basicPrice = 450;
-            proPrice = 800;
-        } 
-        // Rule 3: US Prices (Code 'US') - Explicitly set but same as default
-        else if (code === 'US' || code === 'DEFAULT') {
-            // US and all other countries (default) use USD
-            currencySymbol = '$';
-            basicPrice = 499;
-            proPrice = 899;
-        }
-        
-        // 3. Find and update the HTML elements using the IDs
         const priceBasicEl = document.getElementById('basic-price-value');
         const priceProEl = document.getElementById('pro-price-value');
-
+        const basicContainer = priceBasicEl ? priceBasicEl.closest('.price-tag') : null;
+        const proContainer = priceProEl ? priceProEl.closest('.price-tag') : null;
+        
+        // 1. Update text content
         if (priceBasicEl) {
-            priceBasicEl.textContent = currencySymbol + basicPrice;
+            priceBasicEl.textContent = prices.symbol + prices.basic;
         }
         if (priceProEl) {
-            priceProEl.textContent = currencySymbol + proPrice;
+            priceProEl.textContent = prices.symbol + prices.pro;
+        }
+        
+        // 2. Add currency-specific CSS class to the parent container
+        if (basicContainer) {
+            basicContainer.classList.add(prices.class);
+        }
+        if (proContainer) {
+            proContainer.classList.add(prices.class);
         }
     }
 });
