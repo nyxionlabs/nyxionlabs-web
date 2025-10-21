@@ -1,3 +1,63 @@
+<?php
+// --- 1. Define Pricing Schemes ---
+// This matrix holds the different prices and currency symbols for each region/country.
+
+$price_matrix = [
+    // DEFAULT/Fallback Prices (e.g., for US visitors or unknown location)
+    'DEFAULT' => [
+        'currency_symbol' => '$',
+        'package_basic' => 499,
+        'package_pro' => 899
+    ],
+    // European Visitors (Example: Euro prices)
+    'EU_COUNTRIES' => [
+        'currency_symbol' => '€',
+        'package_basic' => 450, 
+        'package_pro' => 800
+    ],
+    // Indian Visitors (Example: INR prices)
+    'IN' => [
+        'currency_symbol' => '₹',
+        'package_basic' => 39999,
+        'package_pro' => 69999
+    ]
+    // Add other specific countries as needed
+];
+
+// --- 2. Determine Visitor Location ---
+$country_code = 'DEFAULT'; 
+$visitor_country = null;
+
+// Check for GeoIP data from the server (common on cPanel)
+if (isset($_SERVER['GEOIP_COUNTRY_CODE']) && !empty($_SERVER['GEOIP_COUNTRY_CODE'])) {
+    $visitor_country = strtoupper($_SERVER['GEOIP_COUNTRY_CODE']);
+    
+    // Check for specific country match (e.g., 'IN')
+    if (isset($price_matrix[$visitor_country])) {
+        $country_code = $visitor_country;
+    } 
+    // Check for region match (e.g., European Union)
+    else {
+        // List of common EU countries for the Euro zone
+        $eu_countries = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
+        if (in_array($visitor_country, $eu_countries)) {
+            $country_code = 'EU_COUNTRIES';
+        }
+    }
+}
+
+// --- 3. Set the Final Variables ---
+// Get the price set for the determined country_code
+$prices = $price_matrix[$country_code];
+
+// Set the final variables used in packages.php
+$currency = $prices['currency_symbol'];
+$basic_price = $prices['package_basic'];
+$pro_price = $prices['package_pro'];
+?>
+<!DOCTYPE html>
+<html lang="en">
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,13 +66,13 @@
   <title>Packages — Nyxion Labs</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css"/>
-  <link rel="icon" type="image/png" href="./logos/icons/ms-icon-70x70.png"/>
+  <link rel="icon" type="image/png" href="./logos/logo.png"/>
 </head>
 <body>
 <header class="site-header">
   <div class="header-inner">
     <a class="brand" href="index.html">
-      <img src="./logos/logo-Photoroom.png" alt="Nyxion Labs logo" class="brand-mark"/>
+      <img src="./logos/logo.png" alt="Nyxion Labs logo" class="brand-mark"/>
       <span class="brand-name">Nyxion Labs</span>
     </a>
     <nav class="nav">
@@ -46,7 +106,7 @@
       </div>
 
       <div class="price-section">
-        <div class="price">$799</div>
+        <p class="price"><?php echo $currency . $basic_price; ?></p>
         <div class="price-period">per project</div>
         <span class="savings">Quick start</span>
       </div>
@@ -81,7 +141,7 @@
       </div>
 
       <div class="price-section">
-        <div class="price">$2,499</div>
+        <p class="price"><?php echo $currency . $pro_price; ?></p>
         <div class="price-period">per month</div>
         <span class="savings">Save time with weekly support</span>
       </div>
