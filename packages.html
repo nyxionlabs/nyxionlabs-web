@@ -1,106 +1,44 @@
-<?php
-
-
-// TEMPORARY: These lines force the server to show PHP errors for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-// --- 1. Define Pricing Schemes ---
-// This matrix holds the different prices and currency symbols for each region/country.
-
-$price_matrix = [
-    // DEFAULT/Fallback Prices (e.g., for US visitors or unknown location)
-    'DEFAULT' => [
-        'currency_symbol' => '$',
-        'package_basic' => 499,
-        'package_pro' => 899
-    ],
-    // European Visitors (Example: Euro prices)
-    'EU_COUNTRIES' => [
-        'currency_symbol' => '€',
-        'package_basic' => 450, 
-        'package_pro' => 800
-    ],
-    // Indian Visitors (Example: INR prices)
-    'IN' => [
-        'currency_symbol' => '₹',
-        'package_basic' => 39999,
-        'package_pro' => 69999
-    ]
-    // Add other specific countries as needed
-];
-
-// --- 2. Determine Visitor Location ---
-$country_code = 'DEFAULT'; 
-$visitor_country = null;
-
-// Check for GeoIP data from the server (common on cPanel)
-if (isset($_SERVER['GEOIP_COUNTRY_CODE']) && !empty($_SERVER['GEOIP_COUNTRY_CODE'])) {
-    $visitor_country = strtoupper($_SERVER['GEOIP_COUNTRY_CODE']);
-    
-    // Check for specific country match (e.g., 'IN')
-    if (isset($price_matrix[$visitor_country])) {
-        $country_code = $visitor_country;
-    } 
-    // Check for region match (e.g., European Union)
-    else {
-        // List of common EU countries for the Euro zone
-        $eu_countries = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
-        if (in_array($visitor_country, $eu_countries)) {
-            $country_code = 'EU_COUNTRIES';
-        }
-    }
-}
-
-// --- 3. Set the Final Variables ---
-// Get the price set for the determined country_code
-$prices = $price_matrix[$country_code];
-
-// Set the final variables used in packages.php
-$currency = $prices['currency_symbol'];
-$basic_price = $prices['package_basic'];
-$pro_price = $prices['package_pro'];
-?>
-<!DOCTYPE html>
-<html lang="en">
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Packages — Nyxion Labs</title>
+  <title>Packages – Nyxion Labs</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="location-pricing.css"/>
   <link rel="icon" type="image/png" href="./logos/logo.png"/>
 </head>
 <body>
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="index.html">
-      <img src="./logos/logo.png" alt="Nyxion Labs logo" class="brand-mark"/>
+<header id="site-header" class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="brand" aria-label="Nyxion Labs home">
+      <img class="brand-mark" src="./logos/logo.png" alt="Nyxion Labs" width="56" height="56" />
       <span class="brand-name">Nyxion Labs</span>
     </a>
-    <nav class="nav">
-      <div class="nav-links">
-        <a href="index.html#solutions">Solutions</a>
-        <a href="contact.html">Contact</a>
-        <a href="consultation.html" class="btn btn-primary btn-xl nav-cta">Free Consultation</a>
-      </div>
-      <button class="nav-toggle" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
+    <nav class="nav" aria-label="Primary">
+      <button id="navToggle" class="nav-toggle" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+        <span></span><span></span><span></span>
       </button>
+
+      <div id="navLinks" class="nav-links">
+        <a href="invoice-app/ai-demo" class="btn btn-primary btn-demo">Try Live AI Demo</a>
+        <a href="index.html#solutions">Solutions</a>
+        <a href="packages.html">Packages</a>
+        <a href="index.html#process">Process</a>
+        <a href="index.html#case-studies">Case Studies</a>
+        <a href="contact.html">Contact</a>
+        <a href="consultation.html" class="btn btn-primary">Get Started</a>
+      </div>
     </nav>
   </div>
-  <div class="nav-backdrop"></div>
 </header>
 
 <section class="page-hero">
   <h1>Packages</h1>
   <p>Transparent pricing with room to grow.</p>
 </section>
+
 <section class="plans-section">
   <div class="container">
 
@@ -112,7 +50,7 @@ $pro_price = $prices['package_pro'];
       </div>
 
       <div class="price-section">
-        <p class="price"><?php echo $currency . $basic_price; ?></p>
+        <p class="price" data-price="starter">$500</p>
         <div class="price-period">per project</div>
         <span class="savings">Quick start</span>
       </div>
@@ -147,7 +85,7 @@ $pro_price = $prices['package_pro'];
       </div>
 
       <div class="price-section">
-        <p class="price"><?php echo $currency . $pro_price; ?></p>
+        <p class="price" data-price="professional">$1,200</p>
         <div class="price-period">per month</div>
         <span class="savings">Save time with weekly support</span>
       </div>
@@ -209,7 +147,7 @@ $pro_price = $prices['package_pro'];
   </div>
 </section>
 
-<!-- FAQ (fixed layout) -->
+<!-- FAQ -->
 <section class="faq-section">
   <div class="container">
     <h2>Frequently Asked Questions</h2>
@@ -238,6 +176,10 @@ $pro_price = $prices['package_pro'];
         <h3>What's included in ongoing support?</h3>
         <p>All packages include system monitoring, performance optimization, and updates access. Professional and Enterprise add proactive support and strategic guidance.</p>
       </div>
+      <div class="faq-item">
+        <h3>Why are prices different by region?</h3>
+        <p>We adjust pricing to reflect local purchasing power and market conditions. This ensures our AI solutions remain accessible and deliver strong ROI regardless of your location. All packages include the same features and quality of service.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -250,5 +192,8 @@ $pro_price = $prices['package_pro'];
   </div>
   <div class="foot-copy">© 2025 Nyxion Labs</div>
 </footer>
+
+<script src="script.js"></script>
+<script src="location-pricing.js"></script>
 </body>
 </html>
