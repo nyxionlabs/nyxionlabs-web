@@ -207,13 +207,22 @@ p {
   flex-shrink: 0;
 }
 
+site-header .brand .brand-name {
+  font-family: 'Space Grotesk', sans-serif; /* Explicitly enforce the logo font */
+  font-weight: 800; /* Ensure it's the boldest weight */
+  font-size: clamp(18px, 2.5vw, 24px);
+  line-height: 1.1;
+  /* Add !important if necessary, but generally avoided. This strong selector should be enough. */
+}
+
+/* Ensure the generic .brand-name selector is removed or kept simple */
 .brand-name {
+  /* Keep only general sizing/reset styles here if needed */
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 800;
   font-size: clamp(18px, 2.5vw, 24px);
   line-height: 1.1;
 }
-
 /* Navigation */
 .nav {
   display: flex;
