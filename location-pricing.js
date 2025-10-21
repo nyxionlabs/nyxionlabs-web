@@ -1,67 +1,84 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    // --- TEMPORARY DIAGNOSTIC CODE ---
-    
-    // Define fallback prices (same as USD default)
-    const DEFAULT_PRICES = { symbol: '$', basic: 500, pro: 1200, class: 'currency-usd' };
-    
-    console.log('1. Price script starting...');
+    // --- 1. Pricing Data Structure ---
+    const pricing_data = {
+        'DEFAULT': { symbol: '$', basic: 500, pro: 1200, class: 'currency-usd' },
+        'US':      { symbol: '$', basic: 500, pro: 1200, class: 'currency-usd' },
+        'PK':      { symbol: 'Rs', basic: 145000, pro: 265000, class: 'currency-pkr' },
+        'EU':      { symbol: '€', basic: 450, pro: 1100, class: 'currency-eur' }
+    };
 
-    fetch('https://ipapi.co/json/')
+    // EU Country Codes (for regional grouping)
+    const eu_codes = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
+    
+    // CORS Workaround: Using a public proxy to fetch geolocation data
+    // NOTE: This service is for testing and may be unstable.
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; 
+    const targetUrl = 'https://ipapi.co/json/';
+
+    // --- 2. Fetch Location via Proxy ---
+    fetch(proxyUrl + targetUrl)
         .then(response => {
-            console.log('2. Fetch response received. Status:', response.status);
             if (!response.ok) {
-                // Log failure and throw error to go to catch block
-                console.error('3a. Fetch failed with status:', response.status);
-                throw new Error('API request failed: ' + response.status);
+                // If the proxy or API fails, log the error and use the default
+                console.error('Fetch failed via proxy with status:', response.status);
+                throw new Error('Proxy or API request failed.');
             }
             return response.json();
         })
         .then(data => {
-            const countryCode = data.country_code ? data.country_code.toUpperCase() : 'DEFAULT';
-            console.log('3b. Success! Detected Country Code:', countryCode);
-            
-            // Temporary manual override to test PK pricing:
-            // updatePrices('PK'); 
-            
-            updatePrices(countryCode);
+            let countryCode = data.country_code ? data.country_code.toUpperCase() : 'DEFAULT';
+            let priceKey = 'DEFAULT';
+
+            // Determine the correct pricing key
+            if (pricing_data[countryCode]) {
+                priceKey = countryCode;
+            } else if (eu_codes.includes(countryCode)) {
+                priceKey = 'EU';
+            }
+
+            updatePrices(priceKey); 
         })
         .catch(error => {
-            console.error('4. FINAL ERROR: Geolocation failed. Applying USD default.', error);
-            // If any error occurs (network, server, etc.), apply the default price.
+            console.error('FINAL ERROR: Geolocation failed. Applying USD default.', error);
             updatePrices('DEFAULT');
         });
 
-    function updatePrices(key) {
-        // ... [Rest of your updatePrices function and pricing_data array goes here] ...
-        
-        // This is the essential part that needs your full logic:
-        const pricing_data = {
-            'DEFAULT': { symbol: '$', basic: 500, pro: 1200, class: 'currency-usd' },
-            'US':      { symbol: '$', basic: 500, pro: 1200, class: 'currency-usd' },
-            'PK':      { symbol: 'Rs', basic: 145000, pro: 265000, class: 'currency-pkr' },
-            'EU':      { symbol: '€', basic: 450, pro: 1100, class: 'currency-eur' }
-        };
-        const eu_codes = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
 
-        let priceKey = 'DEFAULT';
-        if (pricing_data[key]) {
-            priceKey = key;
-        } else if (eu_codes.includes(key)) {
-            priceKey = 'EU';
-        }
-        
-        const prices = pricing_data[priceKey];
+    // --- 3. Update Prices and Apply CSS Class ---
+    function updatePrices(key) {
+        const prices = pricing_data[key];
         
         const priceBasicEl = document.getElementById('basic-price-value');
         const priceProEl = document.getElementById('pro-price-value');
         
-        // Update elements and add classes (your logic must ensure this runs)
+        // Helper function to format large numbers with commas (e.g., 145,000)
+        const formatNumber = (num) => num.toLocaleString('en-US');
+
+        // Update Starter Package
         if (priceBasicEl) {
-            const formattedBasic = prices.basic.toLocaleString('en-US');
+            const formattedBasic = formatNumber(prices.basic);
             priceBasicEl.textContent = prices.symbol + formattedBasic;
-            priceBasicEl.closest('.price-tag').className = 'price-tag ' + prices.class; // Reset classes and add currency class
+            
+            // Add currency class to the parent .price-tag
+            const basicPriceTag = priceBasicEl.closest('.price-tag');
+            if (basicPriceTag) {
+                // IMPORTANT: Ensure the class list is correctly updated
+                basicPriceTag.className = 'price-tag ' + prices.class; 
+            }
         }
-        // ... (Repeat for proPriceEl) ...
+        
+        // Update Professional Package
+        if (priceProEl) {
+            const formattedPro = formatNumber(prices.pro);
+            priceProEl.textContent = prices.symbol + formattedPro;
+            
+            // Add currency class to the parent .price-tag
+            const proPriceTag = priceProEl.closest('.price-tag');
+            if (proPriceTag) {
+                // IMPORTANT: Ensure the class list is correctly updated
+                proPriceTag.className = 'price-tag ' + prices.class;
+            }
+        }
     }
 });
