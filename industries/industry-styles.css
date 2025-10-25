@@ -1,0 +1,1299 @@
+/* ===============================
+   Nyxion Industry Pages — Theme
+   =============================== */
+
+:root {
+  --bg-dark: #0a0a0f;
+  --ink: #0f172a;
+  --ink-2: #1e293b;
+  --ink-3: #334155;
+  --muted: #64748b;
+  --paper: #f6f8fb;
+  --card: #ffffff;
+  --line: #e5e9f2;
+  --accent: #4ab6f8;
+  --accent-2: #06b6d4;
+}
+
+/* Base */
+html, body { height: 100%; }
+body { display: flex; flex-direction: column; }
+main { flex: 1 0 auto; }
+footer { flex-shrink: 0; }
+
+/* Container helpers */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.container.narrow { max-width: 980px; }
+.center { text-align: center; }
+
+/* Typography helpers */
+.eyebrow { letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #bfe7ff; margin-bottom: 8px; }
+.lead { color: var(--ink-3); max-width: 820px; margin-inline: auto; }
+
+/* =======================
+   NAVBAR (no dots)
+   ======================= */
+.nav-links { display: flex; align-items: center; gap: 24px; list-style: none; margin: 0; padding: 0; }
+.nav-links li { list-style: none; }
+.nav-links .dropdown { position: relative; }
+.nav-links .dropdown-menu {
+  display: none;
+  position: absolute; left: 0; top: 100%;
+  background: rgba(0,0,0,0.85);
+  border: 1px solid rgba(255,255,255,0.06);
+  min-width: 260px;
+  border-radius: 10px;
+  padding: 10px 0;
+  margin-top: 12px;
+  backdrop-filter: blur(6px);
+  z-index: 40;
+}
+.nav-links .dropdown:hover .dropdown-menu { display: block; }
+.nav-links .dropdown-menu a {
+  color: #fff; display: block; padding: 10px 16px; text-decoration: none; font-weight: 500;
+}
+.nav-links .dropdown-menu a:hover {
+  background: rgba(255,255,255,0.08);
+}
+/* Mobile open support if your global CSS doesn't handle it */
+.nav-links.open { display: block; }
+
+/* =========
+   HERO
+   ========= */
+.industry-hero {
+  position: relative;
+  background: #0a0a0f; /* fallback tone */
+  color: #fff;
+  min-height: 52vh;  /* tighten as you like */
+  padding: 84px 0 36px;
+  overflow: hidden;
+}
+
+/* Force the video to actually show, full-bleed */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 0;
+}
+
+/* If no video loads, show a clean fallback image or solid bg */
+body.hero-video-fallback .industry-hero {
+  background: #0b1220 url('../hero-fallback.jpg') center / cover no-repeat;
+}
+
+/* Keep the animated overlay subtle over the video or fallback */
+.hero-overlay-animated {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(0, 190, 255, 0.14), rgba(0, 119, 255, 0.14), rgba(0, 190, 255, 0.14));
+  background-size: 300% 300%;
+  animation: shimmerFlow 16s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes shimmerFlow {
+  0% { background-position: 0% 40%; }
+  50% { background-position: 100% 60%; }
+  100% { background-position: 0% 40%; }
+}
+.hero-content { position: relative; z-index: 2; text-align: center; }
+.hero-content h1 {
+  font-size: clamp(30px, 5vw, 54px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin: 8px 0 10px;
+}
+.hero-sub { max-width: 860px; color: #e7f6ff; opacity: 0.92; margin: 0 auto; }
+.hero-ctas { display: flex; gap: 12px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+
+/* Impact bar (centered, glass look) */
+.impact-bar {
+  margin: 26px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(140px, 1fr));
+  gap: 14px;
+  max-width: 900px;
+}
+.impact-item {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+  border-radius: 12px; padding: 14px 16px;
+  text-align: center;
+}
+.impact-val { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; color: #fff; }
+.impact-label { color: #d5ecff; font-size: 13px; }
+
+/* =========
+   SECTIONS
+   ========= */
+.section { padding: 88px 0; }
+.section--light { background: var(--paper); color: var(--ink); }
+.section--dark-alt { background: #0f1220; color: #e8f3ff; }
+
+/* Dark glass challenges */
+.section--dark-glass {
+  background: linear-gradient(180deg, #0d111a, #0b0f17);
+  color: #e7f0ff;
+  padding: 84px 0;
+}
+.challenge-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 14px;
+}
+.glass-dark {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  padding: 20px 18px;
+  box-shadow: 0 14px 36px rgba(0,0,0,0.35);
+}
+.challenge-card h3 { margin: 0 0 6px; color: #fff; letter-spacing: -0.01em; }
+.challenge-card p { color: rgba(235,245,255,0.9); }
+
+/* Solutions */
+.solutions-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.solution {
+  display: grid;
+  grid-template-columns: 44% 1fr;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 32px rgba(16, 24, 40, 0.06);
+}
+@media (max-width: 980px) { .solution { grid-template-columns: 1fr; } }
+.solution-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .45s ease; }
+.solution:hover .solution-media img { transform: scale(1.03); }
+.solution-body { padding: 20px 20px 22px; }
+.solution-body h3 { margin: 0 0 6px; letter-spacing: -0.01em; }
+.solution-body p { color: var(--ink-3); }
+.ticks { margin: 14px 0 0; padding-left: 18px; }
+.ticks li { margin: 8px 0; }
+
+/* Architecture — centered subtle axis */
+.arch-vertical { position: relative; display: grid; gap: 16px; }
+.arch-axis {
+  content: ""; width: 2px; height: 100%;
+  background: linear-gradient(to bottom, rgba(74,182,248,0), rgba(74,182,248,0.35), rgba(6,182,212,0));
+  position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+}
+.arch-layer {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+}
+.section--dark-alt .arch-layer-title { font-weight: 800; color: #fff; letter-spacing: .02em; margin-bottom: 4px; }
+.section--dark-alt .arch-layer-body { color: rgba(235, 244, 255, 0.85); }
+
+/* Case / Impact */
+.case {
+  display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 16px; padding: 22px;
+  box-shadow: 0 10px 32px rgba(16, 24, 40, 0.06);
+}
+@media (max-width: 980px) { .case { grid-template-columns: 1fr; } }
+.case-eyebrow { text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 800; margin-bottom: 4px; }
+.case h3 { margin: 0 0 8px; }
+.case p { color: var(--ink-3); }
+.case-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.metric { background: #f9fbff; border: 1px solid var(--line); border-radius: 12px; text-align: center; padding: 18px 12px; }
+.metric-val { font-weight: 900; font-size: 28px; color: var(--ink); letter-spacing: -0.02em; }
+.metric-label { color: var(--muted); font-weight: 600; font-size: 13px; }
+
+/* CTA Block */
+.cta-block { background: var(--bg-dark); color: #fff; text-align: center; padding: 110px 0; }
+.cta-block .lead { color: #cfeaff; margin: 8px auto 18px; }
+
+/* Motion */
+.fade-seq { opacity: 0; transform: translateY(24px); transition: opacity .8s ease, transform .8s ease; }
+.fade-seq.in { opacity: 1; transform: translateY(0); }
+
+/* Responsive tweaks */
+@media (max-width: 1100px) {
+  .challenge-row { grid-template-columns: 1fr; }
+  .impact-bar { grid-template-columns: repeat(2, 1fr); }
+}
+
+.site-footer {
+  padding: 50px 0 40px !important; /* adjust top spacing here */
+}
+
+.section--dark-glass .section-head .lead {
+  color: #d7e9ff;           /* much brighter */
+  opacity: 0.95;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+}
+
+/* Also ensure any .lead on the dark-alt section is readable */
+.section--dark-alt .section-head .lead {
+  color: #cfe4ff;
+  opacity: 0.95;
+}
+
+/* === Industry pages: shared styles (add at bottom) === */
+/* ============================
+   Retail (scoped enhancements)
+   ============================ */
+
+/* Accent palette (applies when you add body.page-retail) */
+.page-retail {
+  --retail-accent: #2563eb;          /* blue-600 */
+  --retail-accent-2: #8b5cf6;        /* violet-500 */
+  --retail-ink: #0f172a;             /* slate-900 */
+  --retail-ink-sub: #475569;         /* slate-600 */
+  --retail-ink-inverse: #ffffff;
+}
+
+/* Center helpers used by the retail page */
+.center { text-align: center; margin-left: auto; margin-right: auto; }
+.center-list { max-width: 960px; margin: 0 auto; }
+
+/* ---------- HERO (video background) ---------- */
+.hero-center .hero-bg {
+  position: absolute; inset: 0; overflow: hidden; z-index: 0;
+}
+.hero-center .hero-video {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+  filter: saturate(1.05) contrast(1.05) brightness(.9);
+}
+.hero-center .hero-gradient {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(80% 50% at 50% 10%, rgba(255,255,255,.08), transparent 65%),
+    linear-gradient(180deg, rgba(2,6,23,.25), rgba(2,6,23,.7));
+}
+.industry-hero.hero-center {
+  position: relative; padding: 124px 0 92px; background: #0a0a0f; /* fallback */
+}
+.industry-hero.hero-center .hero-inner {
+  position: relative; z-index: 1; display: grid; gap: 18px; justify-items: center;
+  text-align: center; max-width: 960px;
+}
+.page-retail .eyebrow { color: #93c5fd; }             /* visible on video */
+.page-retail .hero-title { color: var(--retail-ink-inverse); }
+.page-retail .hero-sub { color: #eaf6ff; opacity: .98; }
+
+/* CTA row spacing */
+.industry-hero .cta-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+/* ---------- LOGO STRIP ---------- */
+.logo-strip { background: #ffffff; border-bottom: 1px solid rgba(2,6,23,.06); }
+.logo-strip .logos {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 24px;
+  align-items: center; justify-items: center; padding: 20px 0;
+}
+.logo-strip img { height: 28px; max-width: 140px; opacity: .8; filter: grayscale(1); transition: opacity .2s ease; }
+.logo-strip img:hover { opacity: 1; filter: grayscale(0); }
+@media (max-width: 720px){
+  .logo-strip .logos { grid-auto-flow: row; grid-template-columns: repeat(3,minmax(0,1fr)); row-gap: 18px; }
+}
+
+/* ---------- SECTION HEADS (centered) ---------- */
+.section .section-head.center { text-align: center; display: grid; gap: 10px; justify-items: center; }
+.section .section-head.center .lead { max-width: 900px; }
+
+/* ---------- CHALLENGES ---------- */
+.section--dark-glass .challenge { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
+.section--dark-glass .challenge p { color: #cfe4ff; }
+.challenge h3 { margin: 0 0 6px; font-size: 16px; }
+
+/* ---------- SOLUTIONS GRID ---------- */
+.solution-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+@media (max-width: 980px){ .solution-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 640px){ .solution-grid { grid-template-columns: 1fr; } }
+
+.solution-card {
+  background: #fff;
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 14px 40px rgba(2,6,23,.07);
+}
+.page-retail .solution-card h3 { color: var(--retail-ink); }
+.page-retail .solution-card p, .page-retail .checklist li { color: var(--retail-ink-sub); }
+
+.banner-icon {
+  width: 68px; height: 68px; border-radius: 16px; display: grid; place-items: center;
+  font-size: 28px; color: #fff; margin-bottom: 12px;
+  background: linear-gradient(135deg, rgba(37,99,235,.95), rgba(139,92,246,.92));
+  box-shadow: 0 10px 24px rgba(37,99,235,.25);
+}
+
+/* ---------- ARCHITECTURE LIST (centered) ---------- */
+.arch-list { margin: 0; padding-left: 18px; display: grid; gap: 10px; }
+.section--dark-alt .arch-list li { color: #cfe4ff; }
+.center-list { max-width: 900px; }
+
+/* ---------- FADE-IN SEQUENCE ---------- */
+.fade-seq { opacity: 0; transform: translateY(8px); transition: opacity .45s ease, transform .45s ease; }
+.fade-seq.in { opacity: 1; transform: translateY(0); }
+
+/* ---------- WHITE DROPDOWN (stable) ---------- */
+/* (kept here so retail inherits if main CSS misses it) */
+.nav-links { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 28px; }
+.nav-links li { list-style: none; }
+.nav-links .dropdown { position: relative; }
+.nav-links .dropdown::after { content: ""; position: absolute; left:0; right:0; top:100%; height:10px; }
+.nav-links .dropdown-menu {
+  position: absolute; left: 0; top: calc(100% + 8px);
+  min-width: 280px; padding: 8px; background: #fff; color: #0f172a;
+  border: 1px solid rgba(2,6,23,.08); border-radius: 12px; box-shadow: 0 20px 50px rgba(2,6,23,.15);
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+  pointer-events: none; z-index: 50;
+}
+.nav-links .dropdown:hover .dropdown-menu,
+.nav-links .dropdown:focus-within .dropdown-menu { opacity:1; visibility:visible; transform:translateY(0); pointer-events:auto; }
+.nav-links .dropdown-menu a { display:block; padding:10px 14px; border-radius:8px; text-decoration:none; color:#0f172a; font-weight:500; white-space:nowrap; }
+.nav-links .dropdown-menu a:hover { background:#f1f5f9; }
+
+/* ---------- RESPONSIVE TWEAKS ---------- */
+@media (max-width: 900px){
+  .industry-hero.hero-center { padding: 108px 0 72px; }
+  .nav-links { display: none; flex-direction: column; gap: 18px; }
+  .nav-links.open { display: flex; }
+}
+/* --------------------------------------------
+   GLOBAL INDUSTRY POLISH (logos, cards, buttons,
+   centered layouts, and architecture redesign)
+   -------------------------------------------- */
+
+/* Tighten vertical rhythm */
+.section { padding: 72px 0; }
+.section:first-of-type { padding-top: 56px; }
+
+/* HERO: make ghost buttons readable on dark video */
+.btn.btn-ghost,
+a.btn.btn-ghost {
+  color: #eaf2ff;
+  border: 1px solid rgba(255,255,255,.35);
+  background: transparent;
+}
+.btn.btn-ghost:hover {
+  background: rgba(255,255,255,.08);
+  color: #fff;
+}
+
+/* Make any inline hero links visible on dark bg */
+.industry-hero a { color: #c7d8ff; }
+.industry-hero a:hover { color: #fff; }
+
+/* ------------------ LOGO STRIP ------------------ */
+.logo-strip { background: #fff; border-top: 1px solid rgba(2,6,23,.06); border-bottom: 1px solid rgba(2,6,23,.06); }
+.logo-strip .logos {
+  max-width: 1100px; margin: 0 auto; padding: 16px 0;
+  display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 24px;
+  align-items: center; justify-items: center;
+}
+.logo-strip img {
+  height: 26px; max-width: 150px; opacity: .85; filter: grayscale(1);
+  transition: filter .2s ease, opacity .2s ease, transform .2s ease;
+}
+.logo-strip img:hover { filter: grayscale(0); opacity: 1; transform: translateY(-1px); }
+@media (max-width: 900px){ .logo-strip .logos { grid-template-columns: repeat(3, 1fr); row-gap: 18px; } }
+@media (max-width: 520px){ .logo-strip .logos { grid-template-columns: repeat(2, 1fr); } }
+
+/* ------------- SECTION HEAD (CENTERED) ---------- */
+.section-head.center { text-align: center; display: grid; gap: 10px; justify-items: center; }
+.section-head.center .lead, .section-head.center .section-subtitle { max-width: 900px; }
+
+/* -------------- SOLUTION CARDS (“boxes”) -------- */
+.container--narrow { max-width: 1100px; margin: 0 auto; } /* helper */
+
+.solution-grid {
+  max-width: 1100px; margin: 0 auto;               /* CENTER the grid */
+  display: grid; gap: 22px;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  align-items: stretch;                              /* equal height */
+}
+@media (max-width: 1024px){ .solution-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 640px){ .solution-grid { grid-template-columns: 1fr; } }
+
+.solution-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 18px;
+  padding: 24px 22px;
+  box-shadow: 0 20px 45px rgba(2,6,23,.08);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.solution-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 26px 60px rgba(2,6,23,.12);
+}
+.solution-card h3 { margin: 8px 0 6px; letter-spacing: -0.01em; }
+.solution-card p { margin: 0 0 10px; color: #475569; }
+.checklist { margin: 10px 0 0; padding: 0; list-style: none; }
+.checklist li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; margin: 6px 0; color:#334155; }
+.checklist li::before {
+  content: "✓"; font-weight: 700; line-height: 1; margin-top: 2px; color: #10b981; /* emerald */
+}
+
+.banner-icon {
+  width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center;
+  font-size: 26px; color: #fff; margin-bottom: 12px;
+  background: linear-gradient(135deg, rgba(37,99,235,.95), rgba(139,92,246,.92));
+  box-shadow: 0 12px 26px rgba(37,99,235,.25);
+}
+
+/* -------------- REFERENCE ARCHITECTURE ----------- */
+/* Replace the long bulleted list with compact info cards */
+.arch-grid {
+  max-width: 1100px; margin: 6px auto 0;
+  display: grid; gap: 18px; grid-template-columns: repeat(3, minmax(0,1fr));
+}
+@media (max-width: 1024px){ .arch-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+@media (max-width: 640px){ .arch-grid { grid-template-columns: 1fr; } }
+
+.arch-card {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 14px;
+  padding: 18px;
+}
+.section--light .arch-card { background: #f8fafc; border-color: rgba(2,6,23,.06); }
+
+.arch-card .arch-title { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; margin-bottom: 8px; }
+.arch-card .arch-badge {
+  width: 40px; height: 40px; border-radius: 10px; display: grid; place-items:center;
+  background: linear-gradient(135deg, rgba(96,165,250,.9), rgba(139,92,246,.9)); color: #fff;
+  font-size: 18px; font-weight: 700;
+}
+.arch-card p { margin: 0; color: #cfe4ff; }
+.section--light .arch-card p { color: #334155; }
+
+/* --------------- FADE-IN (for .fade-seq) --------- */
+.fade-seq { opacity: 0; transform: translateY(8px); transition: opacity .4s ease, transform .4s ease; }
+.fade-seq.in { opacity: 1; transform: translateY(0); }
+
+
+/* ===============================
+   HEADER / BRAND
+   =============================== */
+.site-header .brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none;
+}
+.site-header .brand-logo {
+  height: 30px; width: auto; display: block; object-fit: contain;
+}
+.site-header .brand-name {
+  font-weight: 700; letter-spacing: -0.01em; color: #e5e7eb;
+}
+.site-header .brand:hover .brand-name { color: #fff; }
+
+/* ===============================
+   LOGO STRIP (original brand colors)
+   =============================== */
+.logo-strip { background:#fff; border-top:1px solid rgba(2,6,23,.06); border-bottom:1px solid rgba(2,6,23,.06); }
+.logo-strip .logos {
+  max-width: 1140px; margin: 0 auto; padding: 18px 0;
+  display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 28px;
+  align-items: center; justify-items: center;
+}
+.logo-strip img { height: 36px; max-width: 180px; /* full color */ }
+@media (max-width: 900px){ .logo-strip .logos { grid-template-columns: repeat(3,1fr); row-gap: 18px; } }
+@media (max-width: 520px){ .logo-strip .logos { grid-template-columns: repeat(2,1fr); } }
+
+/* ===============================
+   SECTION HEADERS & “AI Solutions”
+   =============================== */
+.section-head.center { text-align:center; display:grid; gap: 10px; justify-items:center; }
+.section-head h2 { color:#0f172a; letter-spacing:-0.01em; }
+.section--dark-glass .section-head h2,
+.section--dark-alt .section-head h2 { color:#f1f5f9; }
+.section-subtitle { color:#475569; }
+.section--dark-glass .section-subtitle,
+.section--dark-alt .section-subtitle { color:#c7d2fe; } /* readable on dark */
+
+/* ===============================
+   CHALLENGES (clean cards)
+   =============================== */
+.challenge-row {
+  max-width: 1140px; margin: 8px auto 0;
+  display:grid; gap:16px; grid-template-columns: repeat(3, minmax(0,1fr));
+}
+@media (max-width: 960px){ .challenge-row { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 560px){ .challenge-row { grid-template-columns: 1fr; } }
+
+.challenge {
+  border-radius: 14px; padding: 16px 16px 14px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.10);
+}
+.section--light .challenge { background:#f8fafc; border-color: rgba(2,6,23,.08); }
+.challenge h3 { margin:0 0 6px; font-size:16px; color:#e5edff; }
+.challenge p { margin:0; color:#cfe4ff; }
+.section--light .challenge h3 { color:#0f172a; }
+.section--light .challenge p { color:#475569; }
+
+/* ===============================
+   SOLUTION CARDS (professional look)
+   =============================== */
+.solution-grid{
+  max-width:1140px; margin:0 auto;
+  display:grid; gap:22px; grid-template-columns:repeat(3,minmax(0,1fr));
+}
+@media (max-width: 1024px){ .solution-grid{ grid-template-columns:repeat(2,1fr);} }
+@media (max-width: 640px){ .solution-grid{ grid-template-columns:1fr;} }
+
+.solution-card{
+  background:#fff; border:1px solid rgba(2,6,23,.08);
+  border-radius:18px; padding:24px 22px;
+  box-shadow:0 18px 50px rgba(2,6,23,.08);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.solution-card:hover{ transform:translateY(-2px); box-shadow:0 28px 70px rgba(2,6,23,.12); }
+.solution-card h3{ margin:8px 0 6px; letter-spacing:-0.01em; }
+.solution-card p{ margin:0 0 8px; color:#475569; }
+.checklist{ list-style:none; padding:0; margin:10px 0 0; }
+.checklist li{ display:grid; grid-template-columns:16px 1fr; gap:10px; margin:6px 0; color:#334155; }
+.checklist li::before{ content:"✓"; color:#10b981; font-weight:800; line-height:1; margin-top:2px; }
+.banner-icon{
+  width:64px; height:64px; border-radius:16px; display:grid; place-items:center;
+  font-size:26px; color:#fff; margin-bottom:12px;
+  background:linear-gradient(135deg, rgba(37,99,235,.95), rgba(139,92,246,.92));
+  box-shadow:0 12px 26px rgba(37,99,235,.25);
+}
+
+/* ===============================
+   METRICS (compact, centered row)
+   =============================== */
+.metrics {
+  background: #f8fafc; border-top:1px solid rgba(2,6,23,.06); border-bottom:1px solid rgba(2,6,23,.06);
+}
+.metrics .metrics-row{
+  max-width:1140px; margin:0 auto; padding:24px 0;
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px;
+  text-align:center;
+}
+@media (max-width: 720px){ .metrics .metrics-row{ grid-template-columns:1fr; row-gap:10px; } }
+.metric{
+  background:#fff; border:1px solid rgba(2,6,23,.06);
+  border-radius:14px; padding:16px 12px;
+  box-shadow:0 10px 24px rgba(2,6,23,.06);
+}
+.metric .num{ font-weight:800; font-size:28px; line-height:1.1; color:#0f172a; letter-spacing:-0.01em; }
+.metric .label{ color:#475569; margin-top:4px; }
+
+/* ===============================
+   REFERENCE ARCHITECTURE (no empty space)
+   =============================== */
+.arch-steps{
+  max-width:1140px; margin: 8px auto 0;
+  display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:16px;
+}
+@media (max-width: 1120px){ .arch-steps{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width: 680px){ .arch-steps{ grid-template-columns:1fr; } }
+
+.arch-step{
+  border-radius:14px; padding:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  display:grid; gap:6px;
+}
+.section--light .arch-step{ background:#f8fafc; border-color:rgba(2,6,23,.08); }
+.arch-step .kicker{
+  display:inline-grid; place-items:center; width:40px; height:40px;
+  border-radius:10px; font-weight:800; color:#fff;
+  background:linear-gradient(135deg, rgba(96,165,250,.95), rgba(139,92,246,.95));
+}
+.arch-step h3{ margin:0; color:#f8fafc; }
+.section--light .arch-step h3{ color:#0f172a; }
+.arch-step p{ margin:0; color:#cfe4ff; }
+.section--light .arch-step p{ color:#334155; }
+
+/* ===============================
+   HERO GHOST BUTTON VISIBILITY
+   =============================== */
+.btn.btn-ghost, a.btn.btn-ghost {
+  color:#eaf2ff; border:1px solid rgba(255,255,255,.35); background:transparent;
+}
+.btn.btn-ghost:hover { background:rgba(255,255,255,.08); color:#fff; }
+
+/* minor spacing tidy */
+.section-head.center .lead, .section-head.center .section-subtitle { max-width:900px; }
+
+
+/* ===== HEADINGS / VISIBILITY ===== */
+.section-head.center { text-align:center; display:grid; gap:10px; justify-items:center; }
+.section--light .section-head .eyebrow { color:#334155; }
+.section--light .section-head h2 { color:#0f172a; }
+.section--light .section-subtitle { color:#475569; }
+
+/* ===== NAV READABILITY (keep white on dark headers; turn dark on white) ===== */
+.site-header.is-light .nav-link,
+.site-header.is-light .brand-name { color:#0f172a !important; }
+.site-header.is-light .nav-link:hover,
+.site-header.is-light .brand-name:hover { color:#111827 !important; }
+
+/* Toggle this class from HTML if your header sits on a white hero */
+/* (or leave it; the default header remains white text on dark video) */
+
+/* ===== LOGO STRIP: larger, colored, with tooltips ===== */
+.logo-strip { background:#fff; border-top:1px solid rgba(2,6,23,.06); border-bottom:1px solid rgba(2,6,23,.06); }
+.logo-strip .logos {
+  max-width:1140px; margin:0 auto; padding:18px 0;
+  display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:28px;
+  align-items:center; justify-items:center;
+}
+.logo-strip .partner {
+  position:relative; display:grid; place-items:center; height:48px; /* bigger */
+}
+.logo-strip .partner img { max-height:44px; max-width:180px; display:block; }
+/* Tooltip */
+.logo-strip .partner::after {
+  content:attr(data-name);
+  position:absolute; bottom:-28px; left:50%; transform:translateX(-50%);
+  background:#0f172a; color:#fff; font-size:12px; padding:4px 8px; border-radius:8px;
+  opacity:0; pointer-events:none; white-space:nowrap; transition:opacity .15s ease, transform .15s ease;
+}
+.logo-strip .partner:hover::after { opacity:1; transform:translateX(-50%) translateY(-2px); }
+@media (max-width:900px){ .logo-strip .logos{ grid-template-columns:repeat(3,1fr); row-gap:22px; } }
+@media (max-width:520px){ .logo-strip .logos{ grid-template-columns:repeat(2,1fr); } }
+
+/* ===== CHALLENGES: compact, no dead space ===== */
+.challenge-row{
+  max-width:1140px; margin:12px auto 0;
+  display:grid; gap:16px; grid-template-columns:repeat(3,minmax(0,1fr));
+}
+@media (max-width:960px){ .challenge-row{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:560px){ .challenge-row{ grid-template-columns:1fr; } }
+.challenge{
+  border-radius:16px; padding:16px 18px;
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.10);
+}
+.section--light .challenge{ background:#f8fafc; border-color:rgba(2,6,23,.08); }
+.challenge h3{ margin:0 0 6px; font-size:16px; color:#f8fbff; }
+.challenge p{ margin:0; color:#d6e7ff; }
+.section--light .challenge h3{ color:#0f172a; }
+.section--light .challenge p{ color:#475569; }
+
+/* ===== SOLUTIONS: tighten layout; remove weird whitespace ===== */
+.solution-grid{
+  max-width:1140px; margin:0 auto;
+  display:grid; gap:22px; grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:start;
+}
+@media (max-width:1024px){ .solution-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:640px){ .solution-grid{ grid-template-columns:1fr; } }
+
+.solution-card{
+  background:#fff; border:1px solid rgba(2,6,23,.08); border-radius:18px;
+  padding:22px 20px; box-shadow:0 18px 50px rgba(2,6,23,.08);
+  display:grid; gap:10px;
+}
+.solution-card h3{ margin:4px 0 0; letter-spacing:-0.01em; }
+.solution-card p{ margin:0; color:#475569; }
+
+/* Checklist in two neat columns on wide screens to avoid tall emptiness */
+.checklist{ list-style:none; padding:0; margin:8px 0 0; columns:2; column-gap:24px; }
+.checklist li{ break-inside:avoid; margin:6px 0; color:#334155; position:relative; padding-left:18px; }
+.checklist li::before{ content:"✓"; position:absolute; left:0; top:0; color:#10b981; font-weight:800; }
+@media (max-width:800px){ .checklist{ columns:1; } }
+
+.banner-icon{
+  width:60px; height:60px; border-radius:14px; display:grid; place-items:center; color:#fff;
+  background:linear-gradient(135deg, rgba(37,99,235,.95), rgba(139,92,246,.92));
+  box-shadow:0 12px 26px rgba(37,99,235,.25); font-size:24px;
+}
+
+/* ===== METRICS: redesigned as compact badges ===== */
+.metrics{ background:#f8fafc; border-top:1px solid rgba(2,6,23,.06); border-bottom:1px solid rgba(2,6,23,.06); }
+.metrics .metrics-row{
+  max-width:1140px; margin:0 auto; padding:24px 0;
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px;
+}
+@media (max-width:720px){ .metrics .metrics-row{ grid-template-columns:1fr; } }
+
+.metric{
+  display:grid; grid-template-columns:48px 1fr; gap:12px; align-items:center;
+  background:#fff; border:1px solid rgba(2,6,23,.08); border-radius:14px; padding:14px 16px;
+  box-shadow:0 10px 24px rgba(2,6,23,.06);
+}
+.metric .dot{
+  width:48px; height:48px; border-radius:12px; display:grid; place-items:center; color:#fff;
+  background:linear-gradient(135deg, rgba(96,165,250,.95), rgba(20,184,166,.95));
+  font-weight:800;
+}
+.metric .num{ font-size:20px; font-weight:800; color:#0f172a; letter-spacing:-0.01em; line-height:1.15; }
+.metric .label{ color:#475569; font-size:14px; }
+
+/* ===== REFERENCE ARCHITECTURE: dense, no empty space ===== */
+.arch-steps{
+  max-width:1140px; margin:8px auto 0;
+  display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:16px;
+}
+@media (max-width:1120px){ .arch-steps{ grid-template-columns:repeat(3,1fr); } }
+@media (max-width:680px){ .arch-steps{ grid-template-columns:1fr; } }
+
+.arch-step{
+  background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08);
+  border-radius:14px; padding:16px; display:grid; gap:6px;
+}
+.section--light .arch-step{ background:#f8fafc; border-color:rgba(2,6,23,.08); }
+.arch-step .kicker{
+  width:38px; height:38px; border-radius:10px; display:grid; place-items:center; color:#fff; font-weight:800;
+  background:linear-gradient(135deg, rgba(139,92,246,.95), rgba(37,99,235,.95));
+}
+.arch-step h3{ margin:0; color:#f8fafc; }
+.section--light .arch-step h3{ color:#0f172a; }
+.arch-step p{ margin:0; color:#d8ecff; }
+.section--light .arch-step p{ color:#334155; }
+
+
+/* === FIX: Solution cards checklist layout & spacing === */
+
+/* Card: tighter, consistent spacing */
+.solution-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr; /* icon, heading/desc, list grows */
+  gap: 10px;
+  padding: 24px 22px;
+}
+
+/* Replace newspaper columns with responsive GRID */
+.solution-card .checklist {
+  /* kill older columns rule if present */
+  columns: unset !important;
+  -webkit-columns: unset !important;
+  -moz-columns: unset !important;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 8px 22px;          /* row/column gap */
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+/* One column on smaller screens */
+@media (max-width: 900px) {
+  .solution-card .checklist {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Bullet row */
+.solution-card .checklist li {
+  display: grid;
+  grid-template-columns: 18px 1fr; /* checkmark + text */
+  align-items: start;
+  gap: 10px;
+  margin: 0;               /* remove extra spacing from older rules */
+  color: #334155;
+  word-break: normal;
+  white-space: normal;
+  break-inside: avoid;     /* never split an item across rows */
+}
+
+/* Checkmark */
+.solution-card .checklist li::before {
+  content: "✓";
+  color: #10b981;          /* emerald */
+  font-weight: 800;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* Optional: soften the big shadow at the bottom so the cards feel lighter */
+.solution-card {
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.08);
+}
+.solution-card:hover {
+  box-shadow: 0 24px 56px rgba(2, 6, 23, 0.12);
+}
+
+
+/* === SOLUTION CARDS: bullet layout (final fix) === */
+
+/* 1) Kill any legacy multi-column rules, force a stable base layout */
+.solution-card .checklist {
+  /* nuke previous column settings */
+  columns: initial !important;
+  -webkit-columns: initial !important;
+  -moz-columns: initial !important;
+
+  display: grid !important;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr;         /* single column by default */
+  row-gap: 10px;
+  column-gap: 24px;                   /* used only when it becomes 2 cols */
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  max-width: 100%;
+}
+
+/* Only go 2 columns when there is *plenty* of width */
+@media (min-width: 1200px) {
+  .solution-card .checklist {
+    grid-template-columns: 1fr 1fr;   /* two equal columns on very wide layouts */
+  }
+}
+
+/* Bullet rows: never split; normal word wrapping */
+.solution-card .checklist li {
+  display: grid;
+  grid-template-columns: 18px 1fr;    /* checkmark + text */
+  align-items: start;
+  gap: 10px;
+  margin: 0;
+  color: #334155;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;            /* avoid overflow without breaking every word */
+  break-inside: avoid;
+}
+
+/* Checkmark */
+.solution-card .checklist li::before {
+  content: "✓";
+  color: #10b981;
+  font-weight: 800;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* Optional: tighten card spacing a touch so content breathes evenly */
+.solution-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 12px;
+  padding: 22px 20px;
+  box-shadow: 0 16px 40px rgba(2,6,23,.08);
+}
+/* === FINAL FIX: Solutions section === */
+
+/* 1) Make each card wide enough; auto-fit across the row */
+.solution-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)) !important;
+  gap: 24px !important;
+  align-items: start;
+}
+
+/* 2) Clean card layout */
+.solution-card {
+  display: grid !important;
+  grid-template-rows: auto auto 1fr;
+  gap: 12px;
+  padding: 22px 22px !important;
+  border-radius: 18px;
+  border: 1px solid rgba(2,6,23,.08);
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(2,6,23,.08);
+}
+
+/* 3) NUKE all old multi-column rules and odd word-breaking */
+.solution-card .checklist {
+  /* kill any previous columns rules */
+  columns: initial !important;
+  -webkit-columns: initial !important;
+  -moz-columns: initial !important;
+
+  display: block !important;
+  list-style: none;
+  margin: 12px 0 0 !important;
+  padding: 0 !important;
+}
+
+.solution-card .checklist li {
+  display: flex !important;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 6px 0 !important;
+  color: #334155;
+
+  /* ensure normal wrapping only at spaces/hyphens */
+  white-space: normal !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  hyphens: auto !important;
+}
+
+/* left checkmark */
+.solution-card .checklist li::before {
+  content: "✓";
+  flex: 0 0 auto;
+  line-height: 1.1;
+  font-weight: 800;
+  color: #10b981;
+  margin-top: 2px;
+  font-size: 14px;
+}
+
+/* 4) Tweak title/desc spacing so content breathes evenly */
+.solution-card h3 { margin: 6px 0 2px !important; letter-spacing: -0.01em; }
+.solution-card p  { margin: 0 !important; color: #475569; }
+
+
+/* === LOGO STRIP: force full color, proper size, tooltips === */
+.logo-strip .logos { max-width: 1140px; margin: 0 auto; padding: 18px 0;
+  display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 28px;
+  align-items: center; justify-items: center;
+}
+
+/* partner cell */
+.logo-strip .partner { position: relative; display: grid; place-items: center; height: 52px; }
+
+/* kill any older grayscale/opacity rules */
+.logo-strip img, .logo-strip .partner img, .logo-strip svg {
+  max-height: 44px; max-width: 200px; display: block;
+  filter: none !important; opacity: 1 !important; mix-blend-mode: normal !important;
+}
+
+/* show a small name tooltip on hover */
+.logo-strip .partner::after {
+  content: attr(data-name);
+  position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%);
+  background: #0f172a; color: #fff; font-size: 12px; padding: 4px 8px; border-radius: 8px;
+  opacity: 0; pointer-events: none; white-space: nowrap; transition: opacity .15s ease, transform .15s ease;
+}
+.logo-strip .partner:hover::after { opacity: 1; transform: translateX(-50%) translateY(-2px); }
+
+@media (max-width: 900px) { .logo-strip .logos { grid-template-columns: repeat(3, 1fr); row-gap: 22px; } }
+@media (max-width: 520px) { .logo-strip .logos { grid-template-columns: repeat(2, 1fr); } }
+
+/* ==== Stable Dropdown (no jump/flicker) ==== */
+.nav-links .dropdown { position: relative; }
+
+.nav-links .dropdown > a { /* larger hit-area helps */
+  position: relative;
+  padding-block: 10px;
+}
+
+/* Hover bridge to keep menu open while cursor travels down */
+.nav-links .dropdown::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 100%;
+  height: 12px;
+}
+
+/* Menu: absolute so it doesn't push layout; smooth show/hide */
+.nav-links .dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 10px);
+  min-width: 280px;
+  padding: 8px;
+  background: #fff;
+  color: #0f172a;
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(2,6,23,.15);
+  z-index: 60;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity .16s ease, transform .16s ease, visibility .16s linear;
+  pointer-events: none;
+
+  /* prevent sub-pixel jiggle on GPU */
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+  transform-origin: top center;
+}
+
+/* Show when hovered, focused, or JS adds .open */
+.nav-links .dropdown:hover .dropdown-menu,
+.nav-links .dropdown:focus-within .dropdown-menu,
+.nav-links .dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Items */
+.nav-links .dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  color: #0f172a;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.nav-links .dropdown-menu a:hover { background: #f1f5f9; }
+
+
+
+/* HEADER: readable on white */
+.site-header { position: sticky; top: 0; z-index: 1000; background: transparent; }
+.site-header.is-light,
+.site-header.scrolled {
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 6px 24px rgba(2,6,23,.06);
+  backdrop-filter: saturate(120%) blur(6px);
+}
+
+/* Force dark text on light header – override any earlier rules */
+.site-header.is-light .nav-link,
+.site-header.scrolled .nav-link,
+.site-header.is-light .brand-name,
+.site-header.scrolled .brand-name {
+  color: #0f172a !important;          /* slate-900 */
+  opacity: 1 !important;
+}
+.site-header.is-light .nav-link:hover,
+.site-header.scrolled .nav-link:hover { color: #111827 !important; }
+
+/* Ensure nav container never clips dropdowns */
+.site-header .nav-links { overflow: visible !important; }
+
+
+
+/* DROPDOWN: stabilize and de-jitter */
+.nav-links .dropdown { position: relative; }
+
+/* Larger hit area; avoid layout shift */
+.nav-links .dropdown > a { position: relative; padding-block: 10px; }
+
+/* BIGGER invisible bridge (also wider) so cursor never leaves the hover tree */
+.nav-links .dropdown::after {
+  content: "";
+  position: absolute;
+  left: -14px; right: -14px;          /* forgiving horizontally */
+  top: 100%;
+  height: 16px;                       /* taller bridge */
+}
+
+/* Menu: absolute, no reflow; GPU-friendly animation */
+.nav-links .dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 12px);
+  min-width: 280px;
+  padding: 8px;
+  background: #fff;
+  color: #0f172a;
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(2,6,23,.15);
+  z-index: 2000;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s linear;
+  pointer-events: none;
+
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+  transform-origin: top center;
+}
+
+/* Show states */
+.nav-links .dropdown.open .dropdown-menu,
+.nav-links .dropdown:hover .dropdown-menu,
+.nav-links .dropdown:focus-within .dropdown-menu {
+  opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
+}
+
+/* Items */
+.nav-links .dropdown-menu a {
+  display: block; padding: 10px 14px; color: #0f172a; text-decoration: none;
+  border-radius: 8px; font-weight: 500; white-space: nowrap;
+}
+.nav-links .dropdown-menu a:hover { background: #f1f5f9; }
+
+
+/* Prevent clipping + give forgiving safe zones */
+.site-header .nav-links { overflow: visible !important; }
+.nav-links .dropdown { position: relative; }
+.nav-links .dropdown > a { position: relative; padding-block: 10px; }
+
+/* Wider & taller hover bridge to avoid flicker during diagonal moves */
+.nav-links .dropdown::after {
+  content: "";
+  position: absolute;
+  left: -24px; right: -24px;
+  top: 100%;
+  height: 20px;
+}
+
+/* Menu shell */
+.nav-links .dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 12px);
+  min-width: 280px;
+  padding: 8px;
+  background: #fff;
+  color: #0f172a;
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(2,6,23,.15);
+  z-index: 3000;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s linear;
+  pointer-events: none;
+
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+}
+
+/* Visible when JS adds .open */
+.nav-links .dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Readable links */
+.nav-links .dropdown-menu a {
+  display: block; padding: 10px 14px;
+  color: #0f172a; text-decoration: none; border-radius: 8px; font-weight: 500;
+  white-space: nowrap;
+}
+.nav-links .dropdown-menu a:hover { background: #f1f5f9; }
+
+
+/* =========================================
+   HERO CTA BUTTONS (on dark/video heroes)
+   ========================================= */
+.industry-hero .btn.btn-primary,
+.hero-center .btn.btn-primary {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  border: none;
+  color: #fff !important;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+}
+.industry-hero .btn.btn-primary:hover,
+.hero-center .btn.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.45);
+}
+.industry-hero .btn.btn-ghost,
+.hero-center .btn.btn-ghost {
+  color: #ffffff !important;
+  border: 1px solid rgba(255,255,255,0.45);
+  background: rgba(255,255,255,0.06);
+}
+.industry-hero .btn.btn-ghost:hover,
+.hero-center .btn.btn-ghost:hover { background: rgba(255,255,255,0.12); }
+
+/* =========================================
+   METRICS — Glass pills (as on Finance)
+   Usage: <section class="metrics metrics--glass"> … </section>
+   ========================================= */
+.metrics.metrics--glass {
+  background: transparent;
+  border: 0;
+  padding: 8px 0 28px;
+}
+.metrics.metrics--glass .metrics-row {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+@media (max-width: 1000px){ .metrics.metrics--glass .metrics-row { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 560px){ .metrics.metrics--glass .metrics-row { grid-template-columns: 1fr; } }
+
+.metrics.metrics--glass .metric {
+  display: grid;
+  place-items: center;
+  gap: 6px;
+  padding: 18px 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.25),
+              0 18px 40px rgba(2,6,23,0.35);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  color: #eaf2ff;
+}
+.metrics.metrics--glass .metric .num {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+.metrics.metrics--glass .metric .label {
+  font-size: 14px;
+  opacity: .9;
+}
+
+/* =========================================
+   SOLUTIONS — Horizontal blocks (as on Finance)
+   Usage: wrap blocks in .solution-row--h and each block as .solution-h
+   ========================================= */
+.solution-row--h {
+  max-width: 1140px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+@media (max-width: 1024px){ .solution-row--h { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 680px){ .solution-row--h { grid-template-columns: 1fr; } }
+
+.solution-h {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 14px;
+  padding: 18px 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.24);
+  box-shadow: 0 24px 56px rgba(2,6,23,0.35);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+}
+.section--light .solution-h {
+  background: #ffffff;
+  border-color: rgba(2,6,23,0.08);
+  box-shadow: 0 14px 40px rgba(2,6,23,0.10);
+}
+
+.solution-h .icon {
+  width: 68px; height: 68px; border-radius: 16px;
+  display: grid; place-items: center; font-size: 28px; color:#fff;
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  box-shadow: 0 12px 26px rgba(37,99,235,0.28);
+}
+.solution-h h3 { margin: 2px 0 4px; letter-spacing: -0.01em; }
+.solution-h p  { margin: 0 0 6px; color: #cfe4ff; }
+.section--light .solution-h p { color: #475569; }
+
+.solution-h .list {
+  list-style: none; padding: 0; margin: 8px 0 0;
+  display: grid; gap: 6px;
+}
+.solution-h .list li {
+  display: grid; grid-template-columns: 16px 1fr; gap: 10px;
+  color: #eaf2ff;
+}
+.section--light .solution-h .list li { color: #334155; }
+.solution-h .list li::before { content: "✓"; color: #10b981; font-weight: 800; line-height: 1; margin-top: 1px; }
+
+/* nicer stagger fade if you use .fade-seq */
+.fade-seq { opacity: 0; transform: translateY(8px); transition: opacity .35s ease, transform .35s ease; }
+.fade-seq.in { opacity: 1; transform: none; }

@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" href="./logos/logo.png"/>
 </head>
 <body>
-<header id="site-header" class="site-header">
+<header id="site-header" class="site-header is-light">
   <div class="container header-inner">
     <a href="index.html" class="brand" aria-label="Nyxion Labs home">
       <img class="brand-mark" src="./logos/logo.png" alt="Nyxion Labs" width="56" height="56" />
@@ -21,15 +21,28 @@
         <span></span><span></span><span></span>
       </button>
 
-      <div id="navLinks" class="nav-links">
-        <!--<a href="invoice-app/ai-demo" class="btn btn-primary btn-demo">Try Live AI Demo</a>-->
-        <a href="index.html#solutions">Solutions</a>
-        <a href="packages.html">Packages</a>
-        <a href="index.html#process">Process</a>
-        <a href="index.html#case-studies">Case Studies</a>
-        <a href="contact.html">Contact</a>
-        <a href="consultation.html" class="btn btn-primary">Get Started</a>
-      </div>
+<ul id="navLinks" class="nav-links">
+  <!-- Industry Solutions dropdown -->
+  <li class="nav-item dropdown">
+    <a href="#" class="nav-link">Industries</a>
+    <ul class="dropdown-menu">
+      <li><a href="industries/finance.html">Finance & Banking</a></li>
+      <li><a href="industries/retail.html">Retail & E-Commerce</a></li>
+      <li><a href="industries/real-estate.html">Real Estate & Construction</a></li>
+      <li><a href="industries/logistics.html">Logistics & Distribution</a></li>
+      <li><a href="industries/education.html">Education & Training</a></li>
+      <li><a href="industries/healthcare.html">Healthcare & Life Sciences</a></li>
+    </ul>
+  </li>
+
+  <li><a href="index.html#solutions" class="nav-link">Solutions</a></li>
+  <li><a href="packages.html" class="nav-link">Packages</a></li>
+  <li><a href="index.html#process" class="nav-link">Process</a></li>
+  <li><a href="index.html#case-studies" class="nav-link">Case Studies</a></li>
+  <li><a href="contact.html" class="nav-link">Contact</a></li>
+  <li><a href="consultation.html" class="btn btn-primary">Get Started</a></li>
+</ul>
+
     </nav>
   </div>
 </header>
@@ -213,5 +226,108 @@
 
 <script src="script.js"></script>
 <script src="location-pricing.js"></script>
+
+<script>
+/**
+ * Aim-aware dropdowns:
+ * - Stays open while pointer moves toward the menu.
+ * - Closes only after pointer is outside both trigger & menu for a short time.
+ * - Works with mouse, touch, and keyboard.
+ */
+(function () {
+  var CLOSE_DELAY = 250;   // ms: delay before closing after leaving
+  var OPEN_DELAY  = 60;    // ms: small buffer before opening
+  var HISTORY_LEN = 5;     // track last N mouse points
+
+  var mouseHist = [];
+  window.addEventListener('mousemove', function (e) {
+    mouseHist.push({x: e.clientX, y: e.clientY, t: performance.now()});
+    if (mouseHist.length > HISTORY_LEN) mouseHist.shift();
+  }, {passive: true});
+
+  function movingTowardMenu(trigger, menu) {
+    if (!mouseHist.length || !menu) return false;
+    var r = menu.getBoundingClientRect();
+    var last = mouseHist[mouseHist.length - 1];
+    var prev = mouseHist[0];
+
+    // vector from prev -> last
+    var vx = last.x - prev.x;
+    var vy = last.y - prev.y;
+
+    // center of menu box
+    var cx = r.left + r.width / 2;
+    var cy = r.top  + r.height / 2;
+
+    // vector from last -> center
+    var mx = cx - last.x;
+    var my = cy - last.y;
+
+    // if dot product positive & angle small, pointer heads toward menu
+    var dot = vx*mx + vy*my;
+    var magv = Math.hypot(vx, vy) || 1;
+    var magm = Math.hypot(mx, my) || 1;
+    var cos  = dot / (magv * magm);
+    return cos > 0.15; // tolerance (smaller = stricter)
+  }
+
+  // Close when clicking outside any dropdown
+  document.addEventListener('pointerdown', function (e) {
+    document.querySelectorAll('.nav-links .dropdown.open').forEach(function (dd) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+
+  // Initialize each dropdown
+  document.querySelectorAll('.nav-links .dropdown').forEach(function (dd) {
+    var trigger = dd.querySelector(':scope > a');
+    var menu    = dd.querySelector(':scope > .dropdown-menu');
+    var openTO, closeTO;
+
+    function openNow()   { dd.classList.add('open'); }
+    function closeNow()  { dd.classList.remove('open'); }
+
+    function scheduleOpen() {
+      clearTimeout(openTO); clearTimeout(closeTO);
+      openTO = setTimeout(openNow, OPEN_DELAY);
+    }
+
+    function scheduleClose() {
+      clearTimeout(openTO); clearTimeout(closeTO);
+      closeTO = setTimeout(function () {
+        // keep open if hovering or moving toward the menu
+        var overTrigger = dd.matches(':hover');
+        var overMenu    = menu && menu.matches(':hover');
+        if (overTrigger || overMenu || movingTowardMenu(trigger, menu)) return;
+        closeNow();
+      }, CLOSE_DELAY);
+    }
+
+    // Mouse / trackpad
+    dd.addEventListener('mouseenter', scheduleOpen);
+    dd.addEventListener('mouseleave', scheduleClose);
+    if (menu) {
+      menu.addEventListener('mouseenter', scheduleOpen);
+      menu.addEventListener('mouseleave', scheduleClose);
+    }
+
+    // Keyboard
+    dd.addEventListener('focusin', scheduleOpen);
+    dd.addEventListener('focusout', function (e) {
+      if (!dd.contains(e.relatedTarget)) scheduleClose();
+    });
+
+    // Touch / click toggle
+    if (trigger) {
+      trigger.addEventListener('click', function (ev) {
+        var href = trigger.getAttribute('href') || '';
+        if (href === '#' || href.trim() === '') ev.preventDefault();
+        dd.classList.toggle('open');
+      });
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

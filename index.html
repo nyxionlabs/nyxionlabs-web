@@ -55,7 +55,7 @@
   <link rel="preconnect" href="https://assets.calendly.com" />
 </head>
 <body>
-  <header id="site-header" class="site-header">
+  <header id="site-header" class="site-header is-light">
   <div class="container header-inner">
     <a href="index.html" class="brand" aria-label="Nyxion Labs home">
       <img class="brand-mark" src="./logos/logo.png" alt="Nyxion Labs" width="56" height="56" />
@@ -66,13 +66,31 @@
         <span></span><span></span><span></span>
       </button>
 
-      <div id="navLinks" class="nav-links">
-        <a href="index.html#solutions">Solutions</a>
-        <a href="packages.html">Packages</a>
-        <a href="index.html#process">Process</a>
-        <a href="index.html#case-studies">Case Studies</a>
-        <a href="contact.html">Contact</a>
-        <a href="consultation.html" class="btn btn-primary">Get Started</a>
+<ul id="navLinks" class="nav-links">
+  <!-- Industry Solutions dropdown -->
+  <li class="nav-item dropdown">
+    <a href="#" class="nav-link">Industries</a>
+    <ul class="dropdown-menu">
+      <li><a href="industries/finance.html">Finance & Banking</a></li>
+      <li><a href="industries/retail.html">Retail & E-Commerce</a></li>
+      <li><a href="industries/real-estate.html">Real Estate & Construction</a></li>
+      <li><a href="industries/logistics.html">Logistics & Distribution</a></li>
+      <li><a href="industries/education.html">Education & Training</a></li>
+      <li><a href="industries/healthcare.html">Healthcare & Life Sciences</a></li>
+    </ul>
+  </li>
+
+  <li><a href="index.html#solutions" class="nav-link">Solutions</a></li>
+  <li><a href="packages.html" class="nav-link">Packages</a></li>
+  <li><a href="index.html#process" class="nav-link">Process</a></li>
+  <li><a href="index.html#case-studies" class="nav-link">Case Studies</a></li>
+  <li><a href="contact.html" class="nav-link">Contact</a></li>
+  <li><a href="consultation.html" class="btn btn-primary">Get Started</a></li>
+</ul>
+
+
+            </ul>
+          </li>
       </div>
     </nav>
   </div>
@@ -123,85 +141,85 @@
       </div>
     </section>
 
-    <section id="case-studies" class="case-studies">
-      <div class="container">
-        <div class="section-head">
-          <h2 class="reveal-words">Proven Results Across Industries</h2>
-          <p class="section-subtitle fade-up">Real implementations, measurable outcomes, documented ROI.</p>
-        </div>
+ <!-- Industry Solutions -->
+<section class="industry-carousel">
+  <div class="container">
+    <h2 class="industry-title">Industry Solutions</h2>
+    <p class="industry-sub">AI automation tailored for every sector</p>
 
-        <div class="case-grid">
-          <div class="case-card fade-up">
-            <div class="case-header">
-              <div class="case-industry">Manufacturing</div>
-              <div class="case-company">Fortune 500 Manufacturer</div>
-            </div>
-            <h3>Invoice Processing Automation</h3>
-            <p>Automated 10,000+ monthly invoices with 99.2% accuracy, reducing processing time from 3 days to 2 hours.</p>
-            <div class="case-metrics">
-              <div class="metric">
-                <span class="metric-value">75%</span>
-                <span class="metric-label">Cost Reduction</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">94%</span>
-                <span class="metric-label">Time Saved</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">$2.1M</span>
-                <span class="metric-label">Annual Savings</span>
-              </div>
-            </div>
-          </div>
+    <div class="carousel-wrap">
+      <button class="carousel-arrow prev" aria-label="Scroll left">‹</button>
 
-          <div class="case-card fade-up">
-            <div class="case-header">
-              <div class="case-industry">Financial Services</div>
-              <div class="case-company">Regional Bank</div>
-            </div>
-            <h3>Loan Application Assistant</h3>
-            <p>AI assistant processes loan applications 5x faster while maintaining compliance and improving customer experience.</p>
-            <div class="case-metrics">
-              <div class="metric">
-                <span class="metric-value">400%</span>
-                <span class="metric-label">Speed Increase</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">65%</span>
-                <span class="metric-label">Staff Reduction</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">89%</span>
-                <span class="metric-label">Customer Satisfaction</span>
-              </div>
-            </div>
-          </div>
+      <div class="carousel-track" id="industryTrack">
+        <!-- Each card (unchanged) -->
+        <a href="industries/finance.html" class="carousel-card">
+          <h3>Finance & Banking</h3>
+          <p>Real-time KYC, fraud prevention, loan automation.</p>
+          <span class="link-arrow">Explore →</span>
+        </a>
 
-          <div class="case-card fade-up">
-            <div class="case-header">
-              <div class="case-industry">Healthcare</div>
-              <div class="case-company">Medical Device Company</div>
-            </div>
-            <h3>Predictive Maintenance</h3>
-            <p>AI predicts equipment failures 2-3 weeks in advance, reducing downtime by 80% and maintenance costs by 45%.</p>
-            <div class="case-metrics">
-              <div class="metric">
-                <span class="metric-value">80%</span>
-                <span class="metric-label">Downtime Reduction</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">45%</span>
-                <span class="metric-label">Cost Savings</span>
-              </div>
-              <div class="metric">
-                <span class="metric-value">$1.8M</span>
-                <span class="metric-label">ROI Year 1</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <a href="industries/retail.html" class="carousel-card">
+          <h3>Retail & E-Commerce</h3>
+          <p>Demand forecasting, AI pricing, returns intelligence.</p>
+          <span class="link-arrow">Explore →</span>
+        </a>
+
+        <a href="industries/logistics.html" class="carousel-card">
+          <h3>Logistics & Distribution</h3>
+          <p>Route optimization, fleet AI, predictive maintenance.</p>
+          <span class="link-arrow">Explore →</span>
+        </a>
+
+        <a href="industries/real-estate.html" class="carousel-card">
+          <h3>Real Estate & Construction</h3>
+          <p>Investment intelligence, project cashflow automation.</p>
+          <span class="link-arrow">Explore →</span>
+        </a>
+
+        <a href="industries/healthcare.html" class="carousel-card">
+          <h3>Healthcare & Life Sciences</h3>
+          <p>Patient automation, claims AI, smart diagnostics.</p>
+          <span class="link-arrow">Explore →</span>
+        </a>
+
+        <a href="industries/education.html" class="carousel-card">
+          <h3>Education & Training</h3>
+          <p>Student analytics, AI admissions, academic insights.</p>
+          <span class="link-arrow">Explore →</span>
+        </a>
       </div>
-    </section>
+
+      <button class="carousel-arrow next" aria-label="Scroll right">›</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const track = document.getElementById('industryTrack');
+    if (!track) return;
+
+    const prev = track.parentElement.querySelector('.carousel-arrow.prev');
+    const next = track.parentElement.querySelector('.carousel-arrow.next');
+
+    // Calculate one-card step (card width + CSS gap)
+    function getStep() {
+      const firstCard = track.querySelector('.carousel-card');
+      if (!firstCard) return 360;
+      const cardW = firstCard.getBoundingClientRect().width;
+      const gap = parseInt(getComputedStyle(track).gap || '0', 10) || 0;
+      return Math.round(cardW + gap);
+    }
+
+    function scrollByDir(dir) {
+      track.scrollBy({ left: dir * getStep(), behavior: 'smooth' });
+    }
+
+    prev?.addEventListener('click', () => scrollByDir(-1));
+    next?.addEventListener('click', () => scrollByDir(1));
+  })();
+</script>
+
 
     <section id="solutions" class="solutions">
       <div class="container">
@@ -395,5 +413,123 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <script>
+  (function(){
+    const navToggle = document.getElementById('navToggle');
+    const navLinks  = document.getElementById('navLinks');
+    if (!navToggle || !navLinks) return;
+    navToggle.addEventListener('click', () => {
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!expanded));
+      navLinks.classList.toggle('open');
+    });
+  })();
+</script>
+
+
+<script>
+/**
+ * Aim-aware dropdowns:
+ * - Stays open while pointer moves toward the menu.
+ * - Closes only after pointer is outside both trigger & menu for a short time.
+ * - Works with mouse, touch, and keyboard.
+ */
+(function () {
+  var CLOSE_DELAY = 250;   // ms: delay before closing after leaving
+  var OPEN_DELAY  = 60;    // ms: small buffer before opening
+  var HISTORY_LEN = 5;     // track last N mouse points
+
+  var mouseHist = [];
+  window.addEventListener('mousemove', function (e) {
+    mouseHist.push({x: e.clientX, y: e.clientY, t: performance.now()});
+    if (mouseHist.length > HISTORY_LEN) mouseHist.shift();
+  }, {passive: true});
+
+  function movingTowardMenu(trigger, menu) {
+    if (!mouseHist.length || !menu) return false;
+    var r = menu.getBoundingClientRect();
+    var last = mouseHist[mouseHist.length - 1];
+    var prev = mouseHist[0];
+
+    // vector from prev -> last
+    var vx = last.x - prev.x;
+    var vy = last.y - prev.y;
+
+    // center of menu box
+    var cx = r.left + r.width / 2;
+    var cy = r.top  + r.height / 2;
+
+    // vector from last -> center
+    var mx = cx - last.x;
+    var my = cy - last.y;
+
+    // if dot product positive & angle small, pointer heads toward menu
+    var dot = vx*mx + vy*my;
+    var magv = Math.hypot(vx, vy) || 1;
+    var magm = Math.hypot(mx, my) || 1;
+    var cos  = dot / (magv * magm);
+    return cos > 0.15; // tolerance (smaller = stricter)
+  }
+
+  // Close when clicking outside any dropdown
+  document.addEventListener('pointerdown', function (e) {
+    document.querySelectorAll('.nav-links .dropdown.open').forEach(function (dd) {
+      if (!dd.contains(e.target)) dd.classList.remove('open');
+    });
+  });
+
+  // Initialize each dropdown
+  document.querySelectorAll('.nav-links .dropdown').forEach(function (dd) {
+    var trigger = dd.querySelector(':scope > a');
+    var menu    = dd.querySelector(':scope > .dropdown-menu');
+    var openTO, closeTO;
+
+    function openNow()   { dd.classList.add('open'); }
+    function closeNow()  { dd.classList.remove('open'); }
+
+    function scheduleOpen() {
+      clearTimeout(openTO); clearTimeout(closeTO);
+      openTO = setTimeout(openNow, OPEN_DELAY);
+    }
+
+    function scheduleClose() {
+      clearTimeout(openTO); clearTimeout(closeTO);
+      closeTO = setTimeout(function () {
+        // keep open if hovering or moving toward the menu
+        var overTrigger = dd.matches(':hover');
+        var overMenu    = menu && menu.matches(':hover');
+        if (overTrigger || overMenu || movingTowardMenu(trigger, menu)) return;
+        closeNow();
+      }, CLOSE_DELAY);
+    }
+
+    // Mouse / trackpad
+    dd.addEventListener('mouseenter', scheduleOpen);
+    dd.addEventListener('mouseleave', scheduleClose);
+    if (menu) {
+      menu.addEventListener('mouseenter', scheduleOpen);
+      menu.addEventListener('mouseleave', scheduleClose);
+    }
+
+    // Keyboard
+    dd.addEventListener('focusin', scheduleOpen);
+    dd.addEventListener('focusout', function (e) {
+      if (!dd.contains(e.relatedTarget)) scheduleClose();
+    });
+
+    // Touch / click toggle
+    if (trigger) {
+      trigger.addEventListener('click', function (ev) {
+        var href = trigger.getAttribute('href') || '';
+        if (href === '#' || href.trim() === '') ev.preventDefault();
+        dd.classList.toggle('open');
+      });
+    }
+  });
+})();
+</script>
+
+
 </body>
 </html>

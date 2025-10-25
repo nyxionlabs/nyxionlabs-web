@@ -2866,30 +2866,47 @@ html {
   z-index: -1;
 }
 
-
-
-/* Replace the existing .faq-grid styles with this: */
-
 .faq-section {
   padding: 80px 0;
   background: #fff;
+  
+  /* Reset to default block behavior */
+  display: block; 
+  text-align: center; /* Center the H2 text */
 }
 
-.faq-section h2 {
-  text-align: center;
-  margin-bottom: 48px;
-  color: var(--text);
+/* Force the container to handle the centering of its children */
+.faq-section .container {
+    /* Temporarily using a dedicated class to ensure this rule overrides everything */
+    display: flex !important; 
+    flex-direction: column !important;
+    align-items: center !important; /* CRITICAL: This centers all children (H2 and faq-list) horizontally */
+    
+    /* Ensure the container itself can center */
+    margin: 0 auto !important; 
+    max-width: var(--container-max); 
+    padding: 0 20px;
 }
 
-/* Changed from .faq-grid to .faq-list for single column layout */
+/* Ensure the H2 remains a block element */
+.faq-section .container h2 {
+    width: 100%; /* H2 should span full width of its container */
+    text-align: center;
+}
+
+/* Fix the .faq-list */
 .faq-list {
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: 900px !important; /* Keep the max width */
+  width: 100%; /* Ensure it expands up to 900px */
+  margin: 0 !important; /* Remove conflicting margins */
+  
+  /* Reset display properties since parent is now Flex */
   display: flex;
   flex-direction: column;
   gap: 20px;
+  
+  /* The Flexbox on the parent (.faq-section .container) should now center this block */
 }
-
 .faq-item {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -2934,6 +2951,14 @@ html {
   }
 }
 
+
+.faq-list {
+  max-width: 900px; /* Keep the max width */
+  margin: 0 auto; /* CRITICAL: Centers the block element horizontally */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 /* Class added by JS to the <header> when the menu is open */
 .site-header.menu-open .nav-links {
   display: flex; /* Makes the menu visible */
@@ -2951,3 +2976,533 @@ html {
 .nav-toggle.active span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
+
+.industry-carousel {
+  background: radial-gradient(circle at top left, #0a0f1c, #060811);
+  padding: 100px 0;
+  overflow: hidden;
+}
+
+.industry-title {
+  font-size: 38px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: #fff;
+  text-align: center;
+}
+
+.industry-sub {
+  color: #b5c7e3;
+  text-align: center;
+  margin-bottom: 50px;
+  font-size: 18px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+}
+.carousel-track::-webkit-scrollbar { display: none; }
+
+.carousel-card {
+  flex: 0 0 340px;
+  padding: 28px;
+  border-radius: 18px;
+  background: #ffffff;
+  color: #0a0f1c;
+  scroll-snap-align: start;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  position: relative;
+}
+
+.carousel-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 170, 255, 0.35);
+}
+
+.carousel-card .link-arrow {
+  margin-top: 12px;
+  display: inline-block;
+  font-weight: 600;
+  color: #007aff;
+}
+/* Allow hover elevation to show fully */
+.industry-carousel { overflow: visible; }
+
+/* Wrap keeps arrows aligned to the track */
+.carousel-wrap {
+  position: relative;
+}
+
+/* Arrows */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.carousel-arrow:hover {
+  background: rgba(255,255,255,0.16);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-arrow.prev { left: -6px; }
+.carousel-arrow.next { right: -6px; }
+
+/* Prevent card shadows from being cut at section edges */
+.carousel-track {
+  padding: 6px 12px;  /* tiny breathing room for shadows */
+}
+
+/* Mobile nudge: hide arrows where swipe UX is primary */
+@media (max-width: 640px) {
+  .carousel-arrow { display: none; }
+}
+/* Professional tone for Solutions banners */
+.solutions .banner {
+  border: 1px solid rgba(2,6,23,0.08);
+  box-shadow: 0 14px 40px rgba(2,6,23,0.07);
+}
+
+.solutions .banner h3 {
+  letter-spacing: -0.01em;
+}
+
+.solutions .banner p {
+  color: #475569; /* slightly darker, more professional */
+}
+
+.solutions .banner .checklist li {
+  color: #475569;
+}
+
+.solutions .banner .roi-badge {
+  letter-spacing: .02em;
+  box-shadow: 0 10px 24px rgba(16,185,129,0.25);
+}
+
+/* Icon tile refinement (keep emoji, but make it look crisp) */
+.solutions .banner .banner-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(37,99,235,.95), rgba(139,92,246,.92));
+  box-shadow: 0 10px 24px rgba(37,99,235,.25);
+  font-size: 28px;
+}
+
+/* Tighter spacing on mobile for better scan-ability */
+@media (max-width: 640px) {
+  .solutions .banner { gap: 20px; }
+  .solutions .banner .banner-content { gap: 14px; }
+}
+/* Allow hover elevation and arrows to be visible */
+.industry-carousel { overflow: visible; }
+
+/* Arrow + wrapper styles */
+.carousel-wrap { position: relative; }
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+}
+
+.carousel-arrow:hover {
+  background: rgba(255,255,255,0.16);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-arrow.prev { left: -6px; }
+.carousel-arrow.next { right: -6px; }
+
+/* Give the track a little breathing room so shadows aren't cut */
+.carousel-track { padding: 6px 12px; }
+
+/* Mobile: hide arrows; users swipe */
+@media (max-width: 640px) {
+  .carousel-arrow { display: none; }
+}
+/* Higher-contrast lead text on dark sections */
+.section--dark-glass .section-head .lead,
+.section--dark-alt   .section-head .lead {
+  color: #d8ecff;               /* light, readable on #0a0a0f background */
+  opacity: 1;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+/* Solutions: tone down colors, tighten type rhythm */
+#solutions .section-head h2 {
+  letter-spacing: -0.01em;
+}
+
+#solutions .section-subtitle {
+  color: #475569;  /* slate-600 */
+}
+
+#solutions .banner {
+  border: 1px solid rgba(2,6,23,.08);
+  box-shadow: 0 14px 40px rgba(2,6,23,.07);
+}
+
+#solutions .banner h3 { letter-spacing: -0.01em; }
+#solutions .banner p,
+#solutions .checklist li { color: #475569; }
+
+#solutions .banner .roi-badge {
+  letter-spacing: .02em;
+  box-shadow: 0 10px 24px rgba(16,185,129,.25);
+}
+
+/* Icon tile refinement */
+#solutions .banner .banner-icon {
+  width: 68px; height: 68px; border-radius: 16px;
+  background: linear-gradient(135deg, rgba(37,99,235,.95), rgba(139,92,246,.92));
+  box-shadow: 0 10px 24px rgba(37,99,235,.25);
+  font-size: 28px;
+}
+/* Global navbar dropdown (mirrors industry theme) */
+.nav-links .dropdown { position: relative; }
+.nav-links .dropdown-menu {
+  display: none;
+  position: absolute; left: 0; top: 100%;
+  background: rgba(0,0,0,.85);
+  border: 1px solid rgba(255,255,255,.06);
+  min-width: 260px; border-radius: 10px;
+  padding: 10px 0; margin-top: 12px;
+  backdrop-filter: blur(6px); z-index: 40;
+}
+.nav-links .dropdown:hover .dropdown-menu { display: block; }
+.nav-links .dropdown-menu a {
+  color: #fff; display: block; padding: 10px 16px;
+  text-decoration: none; font-weight: 500;
+}
+.nav-links .dropdown-menu a:hover { background: rgba(255,255,255,.08); }
+
+
+/* ==== Carousel (consolidated) ==== */
+
+/* Let card shadows + arrows show outside the section */
+.industry-carousel { overflow: visible; }
+
+/* Track padding prevents shadow clipping at edges */
+.carousel-track { padding: 6px 12px; }
+
+/* Wrapper provides positioning context for arrows */
+.carousel-wrap { position: relative; }
+
+/* Arrows: solid, high-contrast, keyboard-accessible */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 5;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: #111827;                 /* dark solid */
+  border: 1px solid rgba(255,255,255,.35);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  text-shadow: 0 1px 0 rgba(0,0,0,.6);
+  box-shadow: 0 10px 24px rgba(0,0,0,.35), inset 0 0 0 2px rgba(255,255,255,.12);
+  transform: translateY(-50%);
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease,
+              opacity .18s ease, visibility .18s ease;
+}
+
+/* Position arrows slightly inside so they never straddle a white card */
+.carousel-arrow.prev { left: 8px; }
+.carousel-arrow.next { right: 8px; }
+
+.carousel-arrow:hover {
+  background: #0b1220;
+  box-shadow: 0 12px 32px rgba(0,0,0,.45), inset 0 0 0 2px rgba(255,255,255,.16);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* --- Auto-hide behavior --- */
+.carousel-arrow {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-50%) scale(.95);
+}
+.carousel-wrap:hover .carousel-arrow,
+.carousel-wrap:has(.carousel-card:hover) .carousel-arrow {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(-50%) scale(1);
+}
+.carousel-arrow:hover,
+.carousel-arrow:focus-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Mobile: rely on swipe */
+@media (max-width: 640px) { .carousel-arrow { display: none; } }
+
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;            /* keep your horizontal layout */
+  align-items: center;
+  gap: 28px;                /* matches your existing spacing */
+}
+.nav-links li { list-style: none; }
+
+
+/* Mobile nav behavior */
+@media (max-width: 900px) {
+  .nav-links { display: none; flex-direction: column; gap: 18px; }
+  .site-header.menu-open .nav-links,
+  .nav-links.open { display: flex; }
+}
+/* Mobile nav behavior */
+@media (max-width: 900px) {
+  .nav-links { display: none; flex-direction: column; gap: 18px; }
+  .site-header.menu-open .nav-links,
+  .nav-links.open { display: flex; }
+}
+/* Mobile nav behavior */
+@media (max-width: 900px) {
+  .nav-links { display: none; flex-direction: column; gap: 18px; }
+  .site-header.menu-open .nav-links,
+  .nav-links.open { display: flex; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ==== NAV: white dropdown, stable hover (main pages) ==== */
+.nav-links { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 28px; }
+.nav-links li { list-style: none; }
+
+.nav-links .dropdown { position: relative; }
+.nav-links .dropdown::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  top: 100%;
+  height: 10px;                           /* hover bridge so it won't vanish */
+}
+
+.nav-links .dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  min-width: 280px;
+  padding: 8px;
+  background: #ffffff;                     /* WHITE */
+  color: #0f172a;
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(2,6,23,.15);
+  z-index: 50;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+  pointer-events: none;
+}
+
+.nav-links .dropdown:hover .dropdown-menu,
+.nav-links .dropdown:focus-within .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.nav-links .dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  color: #0f172a;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.nav-links .dropdown-menu a:hover { background: #f1f5f9; }
+
+/* Optional: ensure top-level nav links remain readable on dark headers */
+.site-header .nav-link { color: #e5e7eb; }
+
+
+/* HEADER: readable on white */
+.site-header { position: sticky; top: 0; z-index: 1000; background: transparent; }
+.site-header.is-light,
+.site-header.scrolled {
+  background: rgba(255,255,255,.96);
+  box-shadow: 0 6px 24px rgba(2,6,23,.06);
+  backdrop-filter: saturate(120%) blur(6px);
+}
+
+/* Force dark text on light header – override any earlier rules */
+.site-header.is-light .nav-link,
+.site-header.scrolled .nav-link,
+.site-header.is-light .brand-name,
+.site-header.scrolled .brand-name {
+  color: #0f172a !important;          /* slate-900 */
+  opacity: 1 !important;
+}
+.site-header.is-light .nav-link:hover,
+.site-header.scrolled .nav-link:hover { color: #111827 !important; }
+
+/* Ensure nav container never clips dropdowns */
+.site-header .nav-links { overflow: visible !important; }
+
+
+/* Sticky, forgiving dropdown */
+.site-header .nav-links { overflow: visible !important; }
+
+.nav-links .dropdown { position: relative; }
+
+/* Larger hit area for the trigger */
+.nav-links .dropdown > a { position: relative; padding-block: 10px; }
+
+/* BIG hover bridge + side padding so diagonal movement doesn’t close it */
+.nav-links .dropdown::after {
+  content: "";
+  position: absolute;
+  left: -20px; right: -20px;
+  top: 100%;
+  height: 18px;               /* taller bridge */
+}
+
+/* Menu */
+.nav-links .dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 12px);
+  min-width: 280px;
+  padding: 8px;
+  background: #fff;
+  color: #0f172a;
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(2,6,23,.15);
+  z-index: 2000;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s linear;
+  pointer-events: none;
+
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+}
+
+/* Visible state (JS toggles .open) */
+.nav-links .dropdown.open .dropdown-menu {
+  opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto;
+}
+
+/* Menu items */
+.nav-links .dropdown-menu a {
+  display: block; padding: 10px 14px; color: #0f172a; text-decoration: none;
+  border-radius: 8px; font-weight: 500; white-space: nowrap;
+}
+.nav-links .dropdown-menu a:hover { background: #f1f5f9; }
+
+
+/* Prevent clipping + give forgiving safe zones */
+.site-header .nav-links { overflow: visible !important; }
+.nav-links .dropdown { position: relative; }
+.nav-links .dropdown > a { position: relative; padding-block: 10px; }
+
+/* Wider & taller hover bridge to avoid flicker during diagonal moves */
+.nav-links .dropdown::after {
+  content: "";
+  position: absolute;
+  left: -24px; right: -24px;
+  top: 100%;
+  height: 20px;
+}
+
+/* Menu shell */
+.nav-links .dropdown-menu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 12px);
+  min-width: 280px;
+  padding: 8px;
+  background: #fff;
+  color: #0f172a;
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(2,6,23,.15);
+  z-index: 3000;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s linear;
+  pointer-events: none;
+
+  backface-visibility: hidden;
+  will-change: opacity, transform;
+}
+
+/* Visible when JS adds .open */
+.nav-links .dropdown.open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Readable links */
+.nav-links .dropdown-menu a {
+  display: block; padding: 10px 14px;
+  color: #0f172a; text-decoration: none; border-radius: 8px; font-weight: 500;
+  white-space: nowrap;
+}
+.nav-links .dropdown-menu a:hover { background: #f1f5f9; }
